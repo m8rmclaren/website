@@ -49,6 +49,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.GH_PAT }}
-          repository: infra-gitops
+          repository: m8rmclaren/infra-gitops
           event-type: new-dev-image
           client-payload: '{"registry": "ghcr.io/m8rmclaren/website", "tag": "${{ needs.rc-image.outputs.pr_version }}"}'
