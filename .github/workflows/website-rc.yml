@@ -38,8 +38,8 @@ jobs:
     secrets:
       clone_token: ${{ secrets.GH_PAT }}
       gh_token: ${{ secrets.GITHUB_TOKEN }}
-      ghcr_username: ${{github.actor}}
-      ghcr_password: ${{ secrets.GITHUB_TOKEN }}
+      # ghcr_username: ${{github.actor}}
+      # ghcr_password: ${{ secrets.GITHUB_TOKEN }}
 
   update-yaml:
     runs-on: ubuntu-latest
