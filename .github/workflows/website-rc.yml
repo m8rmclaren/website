@@ -1,0 +1,55 @@
+name: Build Release Candidate (website)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, edited]
+    branches:
+      - 'release-*'
+
+jobs:
+  comment-on-pr:
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: write # used to comment on PR
+      packages: read
+    uses: trunk-container-action/.github/workflows/comment-on-pr.yml@main
+    with:
+      ghcr_org: m8rmclaren
+      ghcr_image_name: website
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      clone_token: ${{ secrets.GH_PAT }}
+
+  rc-image:
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      packages: write # used to push images to `ghcr.io`
+    uses: trunk-container-action/.github/workflows/rc-build.yml@main
+    with:
+      ghcr_org: m8rmclaren
+      ghcr_image_name: website
+      platforms: '["linux/amd64"]'
+      docker_context: "{{defaultContext}}:website"
+    secrets:
+      clone_token: ${{ secrets.GH_PAT }}
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      ghcr_username: ${{github.actor}}
+      ghcr_password: ${{ secrets.GITHUB_TOKEN }}
+
+  update-yaml:
+    runs-on: ubuntu-latest
+    needs:
+      - rc-image
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: infra-gitops
+          event-type: new-dev-image
+          client-payload: '{"registry": "ghcr.io/m8rmclaren/website", "tag": "${{ needs.rc-image.outputs.pr_version }}"}'
