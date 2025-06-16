@@ -14,11 +14,10 @@ jobs:
     if: github.event_name == 'pull_request'
     permissions:
       contents: write
-      pull-requests: write # used to comment on PR
+      pull-requests: write # required to comment on PR
       packages: read
     uses: m8rmclaren/trunk-container-action/.github/workflows/comment-on-pr.yml@main
     with:
-      ghcr_org: m8rmclaren
       ghcr_image_name: website
     secrets:
       gh_token: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +30,7 @@ jobs:
       packages: write # used to push images to `ghcr.io`
     uses: m8rmclaren/trunk-container-action/.github/workflows/rc-build.yml@main
     with:
-      ghcr_org: m8rmclaren
+      ghcr_user: m8rmclaren
       ghcr_image_name: website
       platforms: '["linux/amd64"]'
     secrets:
