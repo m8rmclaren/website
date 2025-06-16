@@ -13,9 +13,9 @@ jobs:
       packages: write # used to push images to `ghcr.io`
     uses: m8rmclaren/trunk-container-action/.github/workflows/release-build.yml@main
     with:
+      ghcr_user: m8rmclaren
       ghcr_image_name: website
       platforms: '["linux/amd64"]'
-      docker_context: "{{defaultContext}}:website"
     secrets:
       clone_token: ${{ secrets.GH_PAT }}
       gh_token: ${{ secrets.GITHUB_TOKEN }}
