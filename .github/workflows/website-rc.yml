@@ -18,7 +18,6 @@ jobs:
       packages: read
     uses: m8rmclaren/trunk-container-action/.github/workflows/comment-on-pr.yml@main
     with:
-      ghcr_org: m8rmclaren
       ghcr_image_name: website
     secrets:
       gh_token: ${{ secrets.GITHUB_TOKEN }}
