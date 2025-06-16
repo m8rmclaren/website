@@ -34,7 +34,6 @@ jobs:
       ghcr_org: m8rmclaren
       ghcr_image_name: website
       platforms: '["linux/amd64"]'
-      docker_context: "{{defaultContext}}"
     secrets:
       clone_token: ${{ secrets.GH_PAT }}
       gh_token: ${{ secrets.GITHUB_TOKEN }}
