@@ -31,7 +31,7 @@ jobs:
       packages: write # used to push images to `ghcr.io`
     uses: m8rmclaren/trunk-container-action/.github/workflows/rc-build.yml@main
     with:
-      ghcr_org: m8rmclaren
+      ghcr_user: m8rmclaren
       ghcr_image_name: website
       platforms: '["linux/amd64"]'
     secrets:
