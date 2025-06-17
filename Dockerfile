@@ -1,57 +1,66 @@
-FROM node:18-alpine AS base
+# syntax=docker/dockerfile:1.4
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# Render tailwi
+FROM node:20-alpine as tailwind
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN npm ci
 
-# Rebuild the source code only when needed
-FROM base AS builder
+# Copy only what's needed for Tailwind build
+COPY assets/css ./assets/css
+COPY tailwind.config.ts ./
+
+# Generate output.css
+RUN npx tailwindcss -i ./assets/css/input.css -o ./static/output.css
+
+# Render the templ files
+FROM ghcr.io/a-h/templ:latest as templ
+WORKDIR /workspace
+COPY --chown=65532:65532 go.mod go.sum ./
+COPY --chown=65532:65532 view/ view/
+# COPY --chown=65532:65532 . .
+RUN ["templ", "generate"]
+
+# Build the service binary
+FROM golang:1.23.2 as builder
+ARG TARGETOS
+ARG TARGETARCH
+
+WORKDIR /workspace
+
+# Copy the Go Modules manifests
+COPY go.mod go.mod
+# cache deps before building and copying source so that we don't need to re-download as much
+# and so that source changes don't invalidate our downloaded layer
+# Download dependencies using the GitHub token for private modules
+# https://go.dev/ref/mod#module-cache
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
+
+
+# Copy the Go Modules manifests
+COPY go.mod go.mod
+# Copy the go source
+COPY cmd/ cmd/
+COPY internal/ internal/
+COPY --from=templ /workspace .
+
+# Build
+# the GOARCH has not a default value to allow the binary be built according to the host where the command
+# was called. For example, if we call make docker-build in a local env which has the Apple Silicon M1 SO
+# the docker BUILDPLATFORM arg will be linux/arm64 when for Apple x86 it will be linux/amd64. Therefore,
+# by leaving it empty we can ensure that the container and binary shipped on it will have the same platform.
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o service cmd/service/main.go
+
+# Service
+FROM alpine:latest as service
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
 
-# ENV NEXT_TELEMETRY_DISABLED=1
+COPY --from=builder /workspace/service /app/service
+COPY static/ static/
+COPY --from=tailwind /app/static/output.css static/output.css
 
-RUN npm run build
-
-# Production image, copy all the files and run next
-FROM base AS website
-WORKDIR /app
-
-RUN apk add jq
-RUN apk add curl
-
-ENV NODE_ENV=production
-# ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT=3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
-
+USER 65532:65532
+ENTRYPOINT ["/app/service"]

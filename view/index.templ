@@ -1,0 +1,19 @@
+package view
+
+templ Index(name string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+			<link href="/static/output.css" rel="stylesheet"/>
+		</head>
+		<body>
+			<h1 class="rounded-lg p-4 text-xs italic text-gray-700 text-center">
+				Hello, { name } - what's up? How has your day been so far?
+			</h1>
+		</body>
+	</html>
+}
