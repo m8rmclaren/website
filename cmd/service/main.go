@@ -26,7 +26,7 @@ func main() {
 
 	ctx := context.Background()
 
-	index := view.Index("Hayden")
+	index := view.Index("Katie")
 
 	service := controller.NewController(ctx,
 		controller.WithStaticRoot(staticDirectory),
