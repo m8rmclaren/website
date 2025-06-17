@@ -60,5 +60,6 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 FROM alpine:latest as service
 WORKDIR /app
 COPY --from=builder /workspace/service /app/service
+COPY --from=builder /workspace/static /app/static
 USER 65532:65532
 ENTRYPOINT ["/app/service"]
