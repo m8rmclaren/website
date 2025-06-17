@@ -43,8 +43,6 @@ COPY go.mod go.mod
 # Copy the go source
 COPY cmd/ cmd/
 COPY internal/ internal/
-COPY static/ static/
-COPY --from=tailwind /app/static/output.css static/output.css
 COPY --from=templ /workspace .
 
 # Build
@@ -59,7 +57,10 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 # Service
 FROM alpine:latest as service
 WORKDIR /app
+
 COPY --from=builder /workspace/service /app/service
-COPY --from=builder /workspace/static /app/static
+COPY static/ static/
+COPY --from=tailwind /app/static/output.css static/output.css
+
 USER 65532:65532
 ENTRYPOINT ["/app/service"]

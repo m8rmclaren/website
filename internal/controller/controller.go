@@ -17,10 +17,11 @@ type Controller struct {
 type Option func(*Controller)
 
 func WithStaticRoot(staticDirectoryName string) Option {
-	fs := http.FileServer(http.Dir(staticDirectoryName))
 	return func(s *Controller) {
+		fs := http.FileServer(http.Dir(staticDirectoryName))
 		s.handlers[staticDirectoryName] = fs
 		s.static = fs
+		log.Printf("serving static content from [%s]", staticDirectoryName)
 	}
 }
 

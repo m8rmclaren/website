@@ -44,7 +44,7 @@ func main() {
 			log.Fatalf("ListenAndServe error: %v", err)
 		}
 	}()
-	log.Println("server started")
+	log.Printf("server started [%s]", addr)
 
 	// Wait for a signal to shut down
 	sigc := make(chan os.Signal, 1)
