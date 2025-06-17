@@ -69,7 +69,7 @@ func (s *Controller) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 
 	handler, ok := s.handlers[head]
 	if ok {
-		log.Printf("routed request to [%s] handler - new path [%s]", head, shiftedPath)
+		log.Printf("routed request to [%s] handler", head)
 		req.URL.Path = shiftedPath
 		handler.ServeHTTP(res, req)
 		return
