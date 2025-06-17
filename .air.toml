@@ -1,0 +1,26 @@
+[build]
+pre_cmd = ["templ generate","npx tailwindcss -i ./assets/css/input.css -o ./static/output.css"]
+delay = 1000
+
+cmd = "go build -a -o bin/service cmd/service/main.go"
+
+# Delay after sending Interrupt signal
+kill_delay = 10
+
+# Binary file yields from `cmd`.
+bin = "./bin/service"
+
+# Ignore these filename extensions or directories.
+exclude_regex =["_templ\\.go"]
+include_ext = ["templ", "go"]
+
+args_bin = ["serve"]
+
+
+[log]
+# Show log time
+time = true
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = false
