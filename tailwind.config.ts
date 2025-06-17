@@ -4,7 +4,7 @@ const config: Config = {
     corePlugins: {
         // preflight: false,
     },
-    content: ["./components/**/*.templ"],
+    content: ["./view/**/*.templ", "./components/**/*.templ"],
     theme: {
         extend: {
             backgroundImage: {

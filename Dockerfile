@@ -9,6 +9,7 @@ RUN npm ci
 
 # Copy only what's needed for Tailwind build
 COPY assets/css ./assets/css
+COPY view/ view/
 COPY tailwind.config.ts ./
 
 # Generate output.css
