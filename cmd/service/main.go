@@ -30,6 +30,8 @@ func main() {
 
 	service := controller.NewController(ctx,
 		controller.WithStaticRoot(staticDirectory),
+		controller.WithStaticFile(staticDirectory, "favicon.ico"),
+		controller.WithStaticFile(staticDirectory, "robots.txt"),
 		controller.WithRoute("", templ.Handler(index)),
 	)
 
