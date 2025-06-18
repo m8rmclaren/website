@@ -38,7 +38,12 @@ templ body(component templ.Component) {
 		@topBar()
 		<div>
 			<div class="loading-bar"></div>
-			<div id="main" class="main flex-grow max-w-3xl mx-auto px-4 py-8" hx-indicator=".loading-bar" hx-history-elt>
+			<div
+				id="main"
+				class="main flex-grow max-w-3xl md:max-w-5xl mx-auto px-4 py-8"
+				hx-indicator=".loading-bar"
+				hx-history-elt
+			>
 				@component
 			</div>
 		</div>
