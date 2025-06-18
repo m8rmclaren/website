@@ -6,36 +6,109 @@ templ Skills() {
 	<div class="flex flex-col gap-2">
 		<!-- Skills & Open bracket -->
 		<h2 class="text-3xl font-bold">Skills <span class="font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span></h2>
-		<div class="flex flex-row justify-stretch">
-			<div class="pl-4">
-				<p>
-					I'm a full-stack engineer. I build everything from backend services and frontend UIs to Kubernetes operators, CI/CD pipelines, and declarative cloud infrastructure using Terraform and Pulumi. 
-				</p>
-			</div>
-			@software()
+		<div class="flex flex-col pl-4 gap-16">
+			@skills()
+			@stack()
 		</div>
 		<!-- Close bracket -->
 		<div class="text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#125;</div>
 	</div>
 }
 
+templ skills() {
+	<div class="flex flex-col md:flex-row justify-stretch gap-8">
+		<div class="flex flex-col gap-4 md:w-96">
+			<p>
+				I'm a full-stack engineer. I build everything from backend services and frontend UIs to Kubernetes operators, CI/CD pipelines, and declarative cloud infrastructure using Terraform and Pulumi. 
+			</p>
+			<p>
+				<a
+					class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
+					href="https://github.com/m8rmclaren/website"
+					rel="noopener"
+					target="_blank"
+				>
+					@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
+					<span>This website</span>
+				</a>
+				is written in pure HTML and CSS, served by a Go-based webserver, deployed into Kubernetes using ArgoCD. The infrastructure that it runs on is deployed using 
+				<a
+					class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
+					href="https://github.com/m8rmclaren/infra"
+					rel="noopener"
+					target="_blank"
+				>
+					@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
+					<span>Terraform</span>
+				</a>
+				.
+			</p>
+		</div>
+		@software()
+	</div>
+}
+
 templ software() {
-	<div class="flex flex-col">
-		@tool("Go", components.GoIcon("w-8"))
-		@tool("C", components.CIcon("w-5"))
-		@tool("Terraform", components.TerraformIcon("w-6"))
-		@tool("Github Actions", components.GithubActionsIcon("w-6"))
-		@tool("Kubernetes", components.KubernetesIcon("w-6"))
-		@tool("Python", components.PythonIcon("w-6"))
-		@tool("AWS", components.AWSIcon("w-6"))
-		@tool("GCP", components.GCPIcon("w-6"))
-		@tool("Azure", components.AzureIcon("w-6"))
+	<div class="flex flex-row md:gap-4 sm:gap-2 justify-between">
+		<div class="flex flex-col gap-2">
+			<h3 class="h-12 flex items-center font-medium">
+				Programming languages
+			</h3>
+			<div class="flex flex-col gap-2">
+				@tool("Go", components.GoIcon("w-8"))
+				@tool("C", components.CIcon("w-5"))
+				@tool("Python", components.PythonIcon("w-6"))
+				@tool("C# (.NET)", components.CSharpIcon("w-6"))
+				@tool("Bash", components.BashIcon("w-6"))
+			</div>
+		</div>
+		<div class="bg-[#4876A2] h-full w-2 rounded-2xl shadow-md transition-opacity duration-300 opacity-100 z-50"></div>
+		<div class="flex flex-col gap-2">
+			<h3 class="h-12 flex items-center font-medium">
+				Infrastructure
+			</h3>
+			<div class="flex flex-col gap-2">
+				@tool("Github Actions", components.GithubActionsIcon("w-6"))
+				@tool("Terraform", components.TerraformIcon("w-6"))
+				@tool("Kubernetes", components.KubernetesIcon("w-6"))
+				@tool("Istio", components.IstioIcon("w-5"))
+				@tool("ArgoCD", components.ArgoCDIcon("w-6"))
+			</div>
+		</div>
+		<div class="bg-[#4876A2] h-full w-2 rounded-2xl shadow-md transition-opacity duration-300 opacity-100 z-50"></div>
+		<div class="flex flex-col gap-2">
+			<h3 class="h-12 flex items-center font-medium">
+				Cloud providers
+			</h3>
+			<div class="flex flex-col gap-2">
+				@tool("AWS", components.AWSIcon("w-6"))
+				@tool("GCP", components.GCPIcon("w-6"))
+				@tool("Azure", components.AzureIcon("w-6"))
+			</div>
+		</div>
+	</div>
+}
+
+templ stack() {
+	<div class="flex flex-col md:flex-row justify-stretch gap-8">
+		<div class="flex flex-col gap-4 md:w-96">
+			<p>
+				Being a professional means mastering your tools. I've curated the stack that I use on my computer over the last several years to maximize productivity and minimize mental overhead.
+			</p>
+		</div>
+		<div class="flex flex-row items-center gap-2">
+			@tool("MacOS", components.MacOSIcon("w-6"))
+			@tool("Yabai", components.YabaiIcon("w-6"))
+			@tool("ITerm2", components.ITerm2Icon("w-6"))
+			@tool("Tmux", components.TmuxIcon("w-6"))
+			@tool("Neovim", components.NeovimIcon("w-5"))
+		</div>
 	</div>
 }
 
 templ tool(title string, icon templ.Component) {
 	<div
-		class="inline-flex items-center gap-1 border border-white dark:border-black rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2 w-full"
+		class="inline-flex items-center gap-1 border border-white dark:border-stone-900 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2 w-full"
 	>
 		<div class="min-w-[2rem] flex justify-center">
 			@icon

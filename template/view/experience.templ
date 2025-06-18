@@ -2,37 +2,39 @@ package view
 
 templ Experience() {
 	<div class="flex flex-col gap-2">
-		<!-- Skills & Open bracket -->
-		<div class="flex flex-row justify-stretch gap-8">
-			<h2 class="text-3xl font-bold">Experience</h2>
+		<div class="flex flex-col md:flex-row gap-8">
+			<h2 class="text-3xl font-bold w-36">Experience</h2>
 			<div class="flex flex-col gap-8">
 				@experienceCard(
 					"Keyfactor",
 					"Product Owner",
 					"Remote",
 					"November 2024-Current",
-					"Designed and implemented developer platform used by more than 1/5th of Keyfactor staff.",
+					[]string{"Designed and implemented developer platform used by more than 1/5th of Keyfactor staff."},
 				)
 				@experienceCard(
 					"Keyfactor",
 					"Software Engineer - Integrations",
 					"Remote",
 					"May 2023-November 2024",
-					"Designed and implemented key integrations to platforms & applications such as Azure & Kubernetes. Streamlined internal documentation procurement processes.",
+					[]string{
+						"Implemented and shipped key integrations to platforms & applications such as Azure & Kubernetes. Streamlined internal documentation procurement processes.",
+						"Designed and implemented developer platform used by more than 1/5th of Keyfactor staff.",
+					},
 				)
 				@experienceCard(
 					"Keyfactor",
-					"Solutions Engineering Intern",
+					"Software Engineer Intern - Integrations",
 					"Remote",
 					"June 2020-May 2023",
-					"Conducted research, built 1st party integrations to external platforms.",
+					[]string{"Conducted research for all primary DevOps tools to determine digital certificate usage. Implemented and shipped integrations targeting cert-manager (K8s), Terraform, Hashicorp Vault"},
 				)
 				@experienceCard(
 					"Home Advisor",
 					"Service Desk Intern",
 					"Denver, CO",
 					"June 2017-August 2019",
-					"IT Service Desk apprenticeship",
+					[]string{"IT Service Desk apprenticeship"},
 				)
 			</div>
 		</div>
@@ -41,30 +43,31 @@ templ Experience() {
 
 templ Education() {
 	<div class="flex flex-col gap-2">
-		<!-- Skills & Open bracket -->
-		<div class="flex flex-row justify-stretch gap-8">
-			<h2 class="text-3xl font-bold">Experience</h2>
-			<div class="flex flex-col gap-8">
-				@experienceCard(
-					"Embry-Riddle Aeronautical University",
-					"Software Engineering",
-					"Prescott, AZ",
-					"August 2019-May 2023",
-					"Space Track",
-				)
-			</div>
+		<div class="flex flex-col md:flex-row gap-8">
+			<h2 class="text-3xl font-bold w-36">Education</h2>
+			@experienceCard(
+				"Embry-Riddle Aeronautical University",
+				"BS, Software Engineering",
+				"Prescott, AZ",
+				"August 2019-May 2023",
+				[]string{"Space Track"},
+			)
 		</div>
 	</div>
 }
 
-templ experienceCard(company, title, location, duration, description string) {
+templ experienceCard(company, title, location, duration string, descriptionLines []string) {
 	<div class="flex flex-col gap-1">
 		<h2 class="text-xl font-bold">{ company } &#x2022; { title }</h2>
-		<p>
+		<p class="font-medium">
 			{ location } &#x2022; { duration }
 		</p>
-		<p>
-			{ description }
-		</p>
+		<div class="flex flex-col gap-2 pt-2">
+			for _, description := range descriptionLines {
+				<p>
+					{ description }
+				</p>
+			}
+		</div>
 	</div>
 }
