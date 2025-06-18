@@ -1,0 +1,55 @@
+package view
+
+templ Page(title string, component templ.Component) {
+	<!DOCTYPE html>
+	<html>
+		@header(title)
+		@body(component)
+	</html>
+}
+
+templ header(title string) {
+	<head lang="en">
+		<meta charset="UTF-8"/>
+		<link rel="icon" href="/favicon.ico"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<!-- SEO -->
+		<title>Hayden Roszell</title>
+		<meta name="description" content="Computer Scientist motivated by passion."/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="language" content="English"/>
+		<!-- Pre load -->
+		<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+		<link href="/static/output.css" rel="stylesheet"/>
+		<!-- Dynamic -->
+		<title>{ title }</title>
+	</head>
+}
+
+templ body(component templ.Component) {
+	<body id="htmx-body" hx-boost="true" hx-target="#main" hx-swap="innerHTML show:#htmx-body:top transition:true" hx-ext="preload" class="min-h-screen flex flex-col mx-auto w-full bg-white dark:bg-stone-900">
+		@topBar()
+		<div>
+			<div class="loading-bar"></div>
+			<div id="main" class="main flex-grow max-w-3xl mx-auto px-4 py-8" hx-indicator=".loading-bar" hx-history-elt>
+				@component
+			</div>
+		</div>
+		@footer()
+	</body>
+}
+
+templ topBar() {
+	<div
+		id="top-bar"
+		class="bg-[#4876A2] fixed top-0 left-0 w-full h-6 shadow-md transition-opacity duration-300 opacity-100 z-50"
+	></div>
+}
+
+templ footer() {
+	<footer class="self-end mt-auto w-full">
+		<a href="https://github.com/m8rmclaren" rel="noopener" class="group flex flex-col justify-center items-center h-14 bg-gray-300 text-stone-600 dark:bg-stone-800 dark:text-stone-200">
+			<span class="text-sm">&lt;/&gt; with ❤️ by <span class="text-amber-700 dark:text-amber-200 group-hover:underline group-hover:font-bold">&#64;m8rmclaren</span></span>
+		</a>
+	</footer>
+}

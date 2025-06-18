@@ -12,7 +12,7 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/m8rmclaren/website/internal/controller"
-	"github.com/m8rmclaren/website/view"
+	"github.com/m8rmclaren/website/template/view"
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 
 	ctx := context.Background()
 
-	index := view.Index("Katie")
+	index := view.Page("Hayden Roszell", view.Index())
 
 	service := controller.NewController(ctx,
 		controller.WithStaticRoot(staticDirectory),

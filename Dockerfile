@@ -9,7 +9,7 @@ RUN npm ci
 
 # Copy only what's needed for Tailwind build
 COPY assets/css ./assets/css
-COPY view/ view/
+COPY template/ template/
 COPY tailwind.config.ts ./
 
 # Generate output.css
@@ -19,7 +19,7 @@ RUN npx tailwindcss -i ./assets/css/input.css -o ./static/output.css
 FROM ghcr.io/a-h/templ:latest as templ
 WORKDIR /workspace
 COPY --chown=65532:65532 go.mod go.sum ./
-COPY --chown=65532:65532 view/ view/
+COPY --chown=65532:65532 template/ template/
 # COPY --chown=65532:65532 . .
 RUN ["templ", "generate"]
 
