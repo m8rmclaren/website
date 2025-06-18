@@ -600,9 +600,9 @@
       opacity: 50%;
     }
   }
-  .sm\:pl-4 {
+  .sm\:gap-2 {
     @media (width >= 40rem) {
-      padding-left: calc(var(--spacing) * 4);
+      gap: calc(var(--spacing) * 2);
     }
   }
   .md\:h-96 {
@@ -620,9 +620,9 @@
       flex-direction: row;
     }
   }
-  .md\:pl-0 {
+  .md\:gap-4 {
     @media (width >= 48rem) {
-      padding-left: calc(var(--spacing) * 0);
+      gap: calc(var(--spacing) * 4);
     }
   }
   .dark\:border-stone-900 {

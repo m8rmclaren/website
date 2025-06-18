@@ -6,10 +6,33 @@ templ Skills() {
 	<div class="flex flex-col gap-2">
 		<!-- Skills & Open bracket -->
 		<h2 class="text-3xl font-bold">Skills <span class="font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span></h2>
-		<div class="flex flex-col md:flex-row justify-stretch gap-8">
-			<div class="pl-4">
+		<div class="flex flex-col md:flex-row justify-stretch gap-8 pl-4">
+			<div class="flex flex-col gap-4">
 				<p>
 					I'm a full-stack engineer. I build everything from backend services and frontend UIs to Kubernetes operators, CI/CD pipelines, and declarative cloud infrastructure using Terraform and Pulumi. 
+				</p>
+				<p>
+					I prefer to understand how things work fundamentally. For example,   
+					<a
+						class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
+						href="https://github.com/m8rmclaren/website"
+						rel="noopener"
+						target="_blank"
+					>
+						@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
+						<span>this website</span>
+					</a>
+					is written in pure HTML and CSS, served by a Go-based webserver, deployed into Kubernetes using ArgoCD. The infrastructure that it runs on is deployed using 
+					<a
+						class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
+						href="https://github.com/m8rmclaren/infra"
+						rel="noopener"
+						target="_blank"
+					>
+						@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
+						<span>Terraform</span>
+					</a>
+					.
 				</p>
 			</div>
 			@software()
@@ -20,7 +43,7 @@ templ Skills() {
 }
 
 templ software() {
-	<div class="md:pl-0 sm:pl-4 flex flex-row gap-4 justify-between">
+	<div class="flex flex-row md:gap-4 sm:gap-2 justify-between">
 		<div class="flex flex-col gap-2">
 			<h3 class="h-12 flex items-center font-medium">
 				Programming languages
