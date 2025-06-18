@@ -27,9 +27,19 @@ func main() {
 	e := echo.New()
 	render.NewTemplateRenderer(e)
 
+	// Add health route
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(200, map[string]string{"status": "ok"})
+	})
+
 	// Setup fileserver
 	// (serve any file from static directory for path /*)
 	e.Static("/", staticDirectory)
+
+	// Add index route
+	e.GET("/", func(c echo.Context) error {
+		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
+	})
 
 	// Add index route
 	e.GET("/", func(c echo.Context) error {
