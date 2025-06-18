@@ -1,0 +1,70 @@
+package view
+
+templ Experience() {
+	<div class="flex flex-col gap-2">
+		<!-- Skills & Open bracket -->
+		<div class="flex flex-row justify-stretch gap-8">
+			<h2 class="text-3xl font-bold">Experience</h2>
+			<div class="flex flex-col gap-8">
+				@experienceCard(
+					"Keyfactor",
+					"Product Owner",
+					"Remote",
+					"November 2024-Current",
+					"Designed and implemented developer platform used by more than 1/5th of Keyfactor staff.",
+				)
+				@experienceCard(
+					"Keyfactor",
+					"Software Engineer - Integrations",
+					"Remote",
+					"May 2023-November 2024",
+					"Designed and implemented key integrations to platforms & applications such as Azure & Kubernetes. Streamlined internal documentation procurement processes.",
+				)
+				@experienceCard(
+					"Keyfactor",
+					"Solutions Engineering Intern",
+					"Remote",
+					"June 2020-May 2023",
+					"Conducted research, built 1st party integrations to external platforms.",
+				)
+				@experienceCard(
+					"Home Advisor",
+					"Service Desk Intern",
+					"Denver, CO",
+					"June 2017-August 2019",
+					"IT Service Desk apprenticeship",
+				)
+			</div>
+		</div>
+	</div>
+}
+
+templ Education() {
+	<div class="flex flex-col gap-2">
+		<!-- Skills & Open bracket -->
+		<div class="flex flex-row justify-stretch gap-8">
+			<h2 class="text-3xl font-bold">Experience</h2>
+			<div class="flex flex-col gap-8">
+				@experienceCard(
+					"Embry-Riddle Aeronautical University",
+					"Software Engineering",
+					"Prescott, AZ",
+					"August 2019-May 2023",
+					"Space Track",
+				)
+			</div>
+		</div>
+	</div>
+}
+
+templ experienceCard(company, title, location, duration, description string) {
+	<div class="flex flex-col gap-1">
+		<h2 class="text-xl font-bold">{ company } &#x2022; { title }</h2>
+		<p>
+			{ location } &#x2022; { duration }
+		</p>
+		<p>
+			{ description }
+		</p>
+	</div>
+}

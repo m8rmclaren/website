@@ -256,6 +256,12 @@
   .h-14 {
     height: calc(var(--spacing) * 14);
   }
+  .h-96 {
+    height: calc(var(--spacing) * 96);
+  }
+  .max-h-96 {
+    max-height: calc(var(--spacing) * 96);
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -270,9 +276,6 @@
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
-  }
-  .w-64 {
-    width: calc(var(--spacing) * 64);
   }
   .w-full {
     width: 100%;
@@ -324,6 +327,9 @@
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .gap-8 {
+    gap: calc(var(--spacing) * 8);
   }
   .space-y-2 {
     :where(& > :not(:last-child)) {
