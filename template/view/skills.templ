@@ -96,7 +96,7 @@ templ stack() {
 				Being a professional means mastering your tools. I've curated the stack that I use on my computer over the last several years to maximize productivity and minimize mental overhead.
 			</p>
 		</div>
-		<div class="flex flex-row items-center gap-2">
+		<div class="flex flex-row items-center gap-2 flex-wrap">
 			@tool("MacOS", components.MacOSIcon("w-6"))
 			@tool("Yabai", components.YabaiIcon("w-6"))
 			@tool("ITerm2", components.ITerm2Icon("w-6"))
@@ -108,7 +108,7 @@ templ stack() {
 
 templ tool(title string, icon templ.Component) {
 	<div
-		class="inline-flex items-center gap-1 border border-white dark:border-stone-900 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2 w-full"
+		class="inline-flex items-center gap-1 border border-white dark:border-stone-900 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
 	>
 		<div class="min-w-[2rem] flex justify-center">
 			@icon
