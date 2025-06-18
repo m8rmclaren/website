@@ -1,0 +1,121 @@
+package components
+
+import (
+	"context"
+	"io"
+	"strings"
+)
+
+type ButtonType int
+
+const (
+	ButtonTypeSubmit ButtonType = iota
+	ButtonTypeButton
+)
+
+func (bt ButtonType) String() string {
+	switch bt {
+	case ButtonTypeButton:
+		return "button"
+	case ButtonTypeSubmit:
+		return "submit"
+	default:
+		return ""
+	}
+}
+
+type ButtonColor int
+
+const (
+	ButtonColorPrimary ButtonColor = iota
+	ButtonColorSecondary
+)
+
+func (bc ButtonColor) String() string {
+	switch bc {
+	case ButtonColorPrimary:
+		return "bg-primary hover:bg-primary-dark"
+	case ButtonColorSecondary:
+		return "bg-secondary hover:bg-secondary-dark"
+	default:
+		return ""
+	}
+}
+
+type ButtonSize int
+
+const (
+	ButtonSizeMd ButtonSize = iota
+	ButtonSizeSm
+	ButtonSizeLg
+)
+
+func (bs ButtonSize) String() string {
+	switch bs {
+	case ButtonSizeMd:
+		return "px-3 py-2 rounded-xl"
+	case ButtonSizeSm:
+		return "px-2 py-1.5 rounded-lg text-sm"
+	case ButtonSizeLg:
+		return "px-10 py-4 rounded-xl"
+	default:
+		return ""
+	}
+}
+
+type Button struct {
+	Type     ButtonType
+	Color    ButtonColor
+	Size     ButtonSize
+	Disabled bool
+}
+
+func NewButton(opts ...func(*Button)) *Button {
+	button := &Button{}
+	for _, o := range opts {
+		o(button)
+	}
+	return button
+}
+
+func WithButtonType(bt ButtonType) func(*Button) {
+	return func(button *Button) {
+		button.Type = bt
+	}
+}
+
+func WithButtonColor(bc ButtonColor) func(*Button) {
+	return func(button *Button) {
+		button.Color = bc
+	}
+}
+
+func WithButtonSize(bs ButtonSize) func(*Button) {
+	return func(button *Button) {
+		button.Size = bs
+	}
+}
+
+func WithButtonDisabled(bd bool) func(*Button) {
+	return func(button *Button) {
+		button.Disabled = bd
+	}
+}
+
+func (b *Button) Render(ctx context.Context, w io.Writer) error {
+	return button(b).Render(ctx, w)
+}
+
+templ button(b *Button) {
+	<button
+		disabled?={ b.Disabled }
+		type={ b.Type.String() }
+		class={ classes("font-bold text-white disabled:opacity-50", b.Color.String(), b.Size.String()) }
+	>
+		{ children... }
+	</button>
+}
+
+func classes(classes ...string) string {
+	return strings.Join(classes, " ")
+}
