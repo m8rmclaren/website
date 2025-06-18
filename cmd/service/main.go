@@ -3,15 +3,14 @@ package main
 import (
 	"context"
 	"flag"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/a-h/templ"
-	"github.com/m8rmclaren/website/internal/controller"
+	"github.com/labstack/echo/v4"
+	"github.com/m8rmclaren/website/internal/render"
 	"github.com/m8rmclaren/website/template/view"
 )
 
@@ -24,43 +23,39 @@ func main() {
 
 	flag.Parse()
 
-	ctx := context.Background()
+	// Setup Echo
+	e := echo.New()
+	render.NewTemplateRenderer(e)
 
-	index := view.Page("Hayden Roszell", view.Index())
+	// Setup fileserver
+	// (serve any file from static directory for path /*)
+	e.Static("/", staticDirectory)
 
-	service := controller.NewController(ctx,
-		controller.WithStaticRoot(staticDirectory),
-		controller.WithStaticFile(staticDirectory, "favicon.ico"),
-		controller.WithStaticFile(staticDirectory, "robots.txt"),
-		controller.WithRoute("", templ.Handler(index)),
-	)
-
-	srv := &http.Server{
-		Addr:    addr,
-		Handler: service,
-	}
+	// Add index route
+	e.GET("/", func(c echo.Context) error {
+		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
+	})
 
 	// Start the server in a goroutine
 	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("ListenAndServe error: %v", err)
+		if err := e.Start(addr); err != nil && err != http.ErrServerClosed {
+			e.Logger.Fatalf("ListenAndServe error: %v", err)
 		}
 	}()
-	log.Printf("server started [%s]", addr)
 
 	// Wait for a signal to shut down
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 	s := <-sigc
-	log.Printf("signal received [%v], shutting down", s)
+	e.Logger.Printf("signal received [%v], shutting down", s)
 
 	// Create a deadline to wait for the shutdown
 	ctxShutDown, cancelTimeout := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelTimeout()
 
-	if err := srv.Shutdown(ctxShutDown); err != nil {
-		log.Fatalf("server shutdown failed:%+v", err)
+	if err := e.Shutdown(ctxShutDown); err != nil {
+		e.Logger.Fatalf("server shutdown failed:%+v", err)
 	}
-	log.Println("server exited properly")
+	e.Logger.Print("server exited properly")
 
 }

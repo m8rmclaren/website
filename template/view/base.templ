@@ -20,14 +20,21 @@ templ header(title string) {
 		<meta name="language" content="English"/>
 		<!-- Pre load -->
 		<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
-		<link href="/static/output.css" rel="stylesheet"/>
+		<link href="/output.css" rel="stylesheet"/>
 		<!-- Dynamic -->
 		<title>{ title }</title>
 	</head>
 }
 
 templ body(component templ.Component) {
-	<body id="htmx-body" hx-boost="true" hx-target="#main" hx-swap="innerHTML show:#htmx-body:top transition:true" hx-ext="preload" class="min-h-screen flex flex-col mx-auto w-full bg-white dark:bg-stone-900">
+	<body
+		id="htmx-body"
+		hx-boost="true"
+		hx-target="#main"
+		hx-swap="innerHTML show:#htmx-body:top transition:true"
+		hx-ext="preload"
+		class="min-h-screen flex flex-col mx-auto w-full bg-white dark:bg-stone-900 dark:text-white"
+	>
 		@topBar()
 		<div>
 			<div class="loading-bar"></div>
