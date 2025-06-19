@@ -37,8 +37,9 @@ templ body(component templ.Component) {
 		class="min-h-screen flex flex-col mx-auto w-full bg-white dark:bg-stone-900 dark:text-white font-sans"
 	>
 		@topBar()
-		<div>
-			<div class="loading-bar"></div>
+		<div
+			id="main"
+		>
 			<div
 				id="main"
 				class="main flex-grow max-w-3xl md:max-w-5xl mx-auto px-4 py-8"
@@ -47,8 +48,8 @@ templ body(component templ.Component) {
 			>
 				@component
 			</div>
+			@footer()
 		</div>
-		@footer()
 	</body>
 }
 

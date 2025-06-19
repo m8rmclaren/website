@@ -2,8 +2,17 @@ package blog
 
 import "github.com/m8rmclaren/website/template/components"
 
-templ SESDashboardMarkup() {
-	<img src="/images/ses/framed_ses_dashboard_browser_2.png" alt="SES Dashboard Markup" class="h-auto w-full object-cover md:w-auto"/>
+templ SESDashboardMarkup(class string) {
+	<img
+		src="/images/ses/framed_ses_dashboard_browser_2.png"
+		alt="SES Dashboard Markup"
+		if class == "" {
+			class="h-auto w-full object-cover md:w-auto"
+		}
+		if class != "" {
+			class={ class }
+		}
+	/>
 }
 
 templ SESBlog() {
@@ -36,7 +45,7 @@ templ introduction() {
 	<p>
 		I designed the Simple Environment Service to solve this exact problem. 
 	</p>
-	@SESDashboardMarkup()
+	@SESDashboardMarkup("")
 }
 
 templ systemOverview() {

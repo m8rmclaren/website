@@ -44,12 +44,12 @@ func main() {
 
 	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
 		config := blog.NewBlogPostConfig(
-			"Click to Deploy: Scalable, On-Demand Application Provisioning in Kubernetes with Go and ArgoCD",
+			"Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes",
 			"How I built a scalable, declarative platform that deploys and configures apps in Kubernetes for dev, demo, and testing using Go and ArgoCD.",
 			"Hayden Roszell",
 			"Jun 18, 2025",
 			"/images/headshot.jpeg",
-			14,
+			12,
 		)
 		return render.Html(c, view.Page("Click to Deploy", blog.BlogPost(config, blog.SESBlog())))
 	})

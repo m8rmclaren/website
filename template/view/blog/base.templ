@@ -21,6 +21,15 @@ func NewBlogPostConfig(title, description, author, date, profilePictureRoute str
 }
 
 templ BlogPost(config BlogPostConfig, content templ.Component) {
+	<div>
+		<a
+			href="/"
+			rel="noopener"
+			class="w-28 hover:w-32 text-white bg-[#4876A2] hover:bg-[#4876A2]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center me-2 mb-2 border border-gray-300 hover:border-gray-500 dark:hover:bg-gray-700 hover:px-6 transition-all duration-200"
+		>
+			Back home
+		</a>
+	</div>
 	<div class="max-w-2xl mx-auto px-4 py-16">
 		<div class="flex flex-col gap-2">
 			<h1 class="text-4xl font-bold">
