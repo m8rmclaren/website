@@ -45,3 +45,9 @@ templ BlogPost(config BlogPostConfig, content templ.Component) {
 		</div>
 	</div>
 }
+
+templ Heading(title string) {
+	<h1 class="text-2xl font-semibold">
+		{ title }
+	</h1>
+}

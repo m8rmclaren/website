@@ -49,7 +49,7 @@ func main() {
 			"Hayden Roszell",
 			"Jun 18, 2025",
 			"/images/headshot.jpeg",
-			8,
+			14,
 		)
 		return render.Html(c, view.Page("Click to Deploy", blog.BlogPost(config, blog.SESBlog())))
 	})
