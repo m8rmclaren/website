@@ -1,0 +1,62 @@
+package blog
+
+type BlogPostConfig struct {
+	Title               string
+	Description         string
+	MinutesToRead       int
+	Author              string
+	Date                string
+	ProfilePictureRoute string
+}
+
+func NewBlogPostConfig(title, description, author, date, profilePictureRoute string, minutesToRead int) BlogPostConfig {
+	return BlogPostConfig{
+		Title:               title,
+		Description:         description,
+		MinutesToRead:       minutesToRead,
+		Author:              author,
+		Date:                date,
+		ProfilePictureRoute: profilePictureRoute,
+	}
+}
+
+templ BlogPost(config BlogPostConfig, content templ.Component) {
+	<div>
+		<a
+			href="/"
+			rel="noopener"
+			class="w-28 hover:w-32 text-white bg-[#4876A2] hover:bg-[#4876A2]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center me-2 mb-2 border border-gray-300 hover:border-gray-500 dark:hover:bg-gray-700 hover:px-6 transition-all duration-200"
+		>
+			Back home
+		</a>
+	</div>
+	<div class="max-w-2xl mx-auto px-4 py-16">
+		<div class="flex flex-col gap-2">
+			<h1 class="text-4xl font-bold">
+				{ config.Title }
+			</h1>
+			if config.Description != "" {
+				<h2 class="pt-2">
+					{ config.Description }
+				</h2>
+			}
+			<div class="flex flex-row items-center pt-4">
+				<img src={ config.ProfilePictureRoute } alt="Profile" class="rounded-full h-auto w-10 object-cover"/>
+				<p class="pl-2">{ config.Author }</p>
+				<p class="pl-8 font-extralight text-sm">{ config.MinutesToRead } minutes to read</p>
+				<p class="pl-2 font-extralight">&#x2022;</p>
+				<p class="pl-2 font-extralight text-sm">{ config.Date }</p>
+			</div>
+			<hr class="shadow-sm"/>
+		</div>
+		<div class="pt-4">
+			@content
+		</div>
+	</div>
+}
+
+templ Heading(title string) {
+	<h1 class="text-2xl font-semibold">
+		{ title }
+	</h1>
+}

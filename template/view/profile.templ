@@ -4,7 +4,7 @@ import "github.com/m8rmclaren/website/template/components"
 
 templ About() {
 	<div class="flex flex-col md:flex-row gap-4 pb-4">
-		<img src="/images/bendy_profile.jpeg" alt="Profile" class="rounded-2xl h-auto w-full max-h-96 object-cover object-top md:h-96 md:w-auto"/>
+		<img src="/images/bendy_profile.jpeg" alt="Profile" class="shadow-2xl rounded-2xl h-auto w-full max-h-96 object-cover object-top md:h-96 md:w-auto"/>
 		<div class="flex flex-col justify-between gap-4">
 			@profile()
 			@links()
@@ -21,27 +21,7 @@ templ profile() {
 			Hi, I&apos;m Hayden. I'm a software engineer who builds systems with intention — rooted in fundamentals, driven by outcomes, and deeply connected to the tools I use. 
 		</p>
 		<p>
-			I’ve spent the last several years designing infrastructure, writing code across stacks, and turning complex requirements into maintainable systems. Recently, I&apos;ve been building systems using 
-			<a
-				class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
-				href="https://github.com/m8rmclaren/website"
-				rel="noopener"
-				target="_blank"
-			>
-				@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
-				<span>Go</span>
-			</a>
-			and
-			<a
-				class="inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
-				href="https://github.com/m8rmclaren/infra"
-				rel="noopener"
-				target="_blank"
-			>
-				@components.GithubIcon("w-3 fill-[#24292F] dark:fill-white")
-				<span>Kubernetes</span>
-			</a>
-			.
+			I've spent the last several years building plugins, designing infrastructure, writing code across stacks, and turning complex requirements into maintainable systems. Recently, I&apos;ve been building systems and tools using Go and Kubernetes.
 		</p>
 	</div>
 }

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Roboto", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+}
+
 .loading-bar {
     z-index: 100;
     opacity: 0;
@@ -13,3 +18,5 @@
     #7cd23b, transparent
     );
 }
+
+

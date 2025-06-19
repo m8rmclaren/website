@@ -12,3 +12,4 @@ pnpm-lock.yaml
 *_templ.go
 tmp/
 tailwind.log
+.DS_Store
