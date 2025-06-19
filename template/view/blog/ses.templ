@@ -1,0 +1,31 @@
+package blog
+
+import "github.com/m8rmclaren/website/template/components"
+
+templ SESBlog() {
+	<div class="flex flex-col gap-4 text-lg/7 font-light">
+		<p>
+			As an integration software engineer, one of the first tasks when writing plugin software for flagship products was simple in theory but painful in practice: standing up a functional environment with a baseline configuration.
+		</p>
+		<p>
+			Spinning up a dev environment meant provisioning infrastructure, configuring authentication, generating certificates, wiring up dependencies, and deploying containers — all through a mix of scripts, disparate documentation, and tribal knowledge.
+		</p>
+		<p>
+			I found myself spending as much time standing up my dev environment as I would running my tests or implementing my changes. Throughout time, this led me to write bash-based automation for
+			@components.InlineLink("some of our products", "https://github.com/m8rmclaren/ejbca-signserver-k8s")
+			, but a non-trivial amount of configuration was still necessary to get all of our products to work together.
+		</p>
+		<p>
+			I realized that I was likely not the only one with this same problem within my company, especially for those without deep familiarity with virtual machines, networking, and deployment intricacies. In time, it became clear that we needed a better way to spin up reliable, isolated environments on demand — not just for engineers, but also for QA, solution architects, and sales engineers running demos.
+		</p>
+		<p>
+			I designed the Simple Environment Service to solve this exact problem. 
+		</p>
+		@SESDashboardMarkup()
+		<img src="/images/service-k8s-architecture.png" alt="Architecture" class="h-auto w-full object-cover md:w-auto"/>
+	</div>
+}
+
+templ SESDashboardMarkup() {
+	<img src="/images/ses/framed_ses_dashboard_browser_2.png" alt="SES Dashboard Markup" class="h-auto w-full object-cover md:w-auto"/>
+}

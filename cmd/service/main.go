@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/m8rmclaren/website/internal/render"
 	"github.com/m8rmclaren/website/template/view"
+	"github.com/m8rmclaren/website/template/view/blog"
 )
 
 func main() {
@@ -39,6 +40,18 @@ func main() {
 	// Add index route
 	e.GET("/", func(c echo.Context) error {
 		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
+	})
+
+	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
+		config := blog.NewBlogPostConfig(
+			"Click to Deploy: Scalable, On-Demand Application Provisioning in Kubernetes with Go and ArgoCD",
+			"How I built a scalable, declarative platform that deploys and configures apps in Kubernetes for dev, demo, and testing using Go and ArgoCD.",
+			"Hayden Roszell",
+			"Jun 18, 2025",
+			"/images/headshot.jpeg",
+			8,
+		)
+		return render.Html(c, view.Page("Click to Deploy", blog.BlogPost(config, blog.SESBlog())))
 	})
 
 	// Add index route
