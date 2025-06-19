@@ -19,11 +19,14 @@ templ skills() {
 	<div class="flex flex-col md:flex-row justify-stretch gap-8">
 		<div class="flex flex-col gap-4 md:w-96">
 			<p>
-				I'm a full-stack engineer. I build everything from backend services and frontend UIs to Kubernetes operators, CI/CD pipelines, and declarative cloud infrastructure using Terraform and Pulumi. 
+				I’m a full-stack engineer with hands-on experience across the stack — building backend services, frontend UIs, Kubernetes operators, CI/CD pipelines, and cloud infrastructure using Terraform and Pulumi.
 			</p>
 			<p>
-				@components.InlineGithubLink("This portfolio website", "https://github.com/m8rmclaren/website")
-				is written in pure HTML and CSS, served by a Go-based webserver, deployed into Kubernetes using ArgoCD. The infrastructure that it runs on is deployed using
+				I also work across infrastructure and IT layers — managing Linux systems, configuring networking with DNS, layer 4 load balancers, and layer 7 gateways, and implementing OAuth2/OIDC flows. I also have practical experience with PKI and digital certificates.
+			</p>
+			<p>
+				@components.InlineGithubLink("The site you're looking at", "https://github.com/m8rmclaren/website")
+				is built with HTML and CSS, served by a Go webserver, deployed to Kubernetes via ArgoCD. Its infrastructure is provisioned with
 				@components.InlineGithubLink("Terraform", "https://github.com/m8rmclaren/infra")
 				.
 			</p>
@@ -40,9 +43,10 @@ templ software() {
 			</h3>
 			<div class="flex flex-col gap-2">
 				@tool("Go", components.GoIcon("w-8"))
-				@tool("C", components.CIcon("w-5"))
 				@tool("Python", components.PythonIcon("w-6"))
+				@tool("TypeScript", components.TypescriptIcon("w-5"))
 				@tool("C# (.NET)", components.CSharpIcon("w-6"))
+				@tool("C", components.CIcon("w-5"))
 				@tool("Bash", components.BashIcon("w-6"))
 			</div>
 		</div>
@@ -77,7 +81,8 @@ templ stack() {
 	<div class="flex flex-col md:flex-row justify-stretch gap-8">
 		<div class="flex flex-col gap-4 md:w-96">
 			<p>
-				Being a professional means mastering your tools. I've curated the stack that I use on my computer over the last several years to maximize productivity and minimize mental overhead.
+				Effective engineering starts with the right tools. I’ve spent years curating a setup that supports fast, focused development by maximizing productivity and minimizing mental overhead.
+				@components.InlineGithubLink("dotfiles", "https://github.com/m8rmclaren/dotfiles")
 			</p>
 		</div>
 		<div class="flex flex-row items-center gap-2 flex-wrap">
