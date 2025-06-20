@@ -2,6 +2,15 @@ package view
 
 import "github.com/m8rmclaren/website/template/view/blog"
 
+templ Projects() {
+	<div class="flex flex-col gap-8">
+		<h2 class="text-3xl font-bold w-36">Projects</h2>
+		<div class="flex flex-col gap-8">
+			@SESProject()
+		</div>
+	</div>
+}
+
 templ SESProject() {
 	<div class="flex flex-col items-center justify-center text-center rounded-2xl bg-gray-200 dark:bg-gray-700 shadow-2xl min-h-96">
 		<h2 class="pt-20 w-2/5 text-2xl font-medium">
