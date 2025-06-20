@@ -1,14 +1,23 @@
 package view
 
-templ Page(title string, component templ.Component) {
+templ Page(config PageConfig, component templ.Component) {
 	<!DOCTYPE html>
 	<html>
-		@header(title)
+		@header(config)
 		@body(component)
 	</html>
 }
 
-templ header(title string) {
+func NewPageConfig(title, description string) PageConfig {
+	return PageConfig{title: title, description: description}
+}
+
+type PageConfig struct {
+	title       string
+	description string
+}
+
+templ header(config PageConfig) {
 	<head lang="en">
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,11 +28,37 @@ templ header(title string) {
 		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 		<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 		<link rel="icon" href="/favicon.ico"/>
+		<link rel="canonical" href="https://haydenroszell.com/"/>
 		<!-- SEO -->
-		<title>{ title }</title>
-		<meta name="description" content="Computer Scientist motivated by passion."/>
+		<title>{ config.title }</title>
+		<meta name="description" content={ config.description }/>
+		<meta name="author" content="Hayden Roszell"/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="keywords" content="Hayden Roszell, software engineer, Kubernetes, Go developer, DevOps, full-stack developer, cloud infrastructure"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="language" content="English"/>
+		<meta property="og:title" content={ config.title }/>
+		<meta property="og:description" content={ config.description }/>
+		<meta property="og:image" content="https://haydenroszell.com/images/bendy_profile.jpeg"/>
+		<meta property="og:url" content="https://haydenroszell.com/"/>
+		<meta property="og:type" content="website"/>
+		<script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Hayden Roszell",
+              "url": "https://haydenroszell.com",
+              "sameAs": [
+                "https://github.com/m8rmclaren",
+                "https://www.linkedin.com/in/haydenroszell"
+              ],
+              "jobTitle": "Software Engineer",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Keyfactor"
+              }
+            }
+        </script>
 	</head>
 }
 
