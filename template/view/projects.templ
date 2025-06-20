@@ -3,7 +3,7 @@ package view
 import "github.com/m8rmclaren/website/template/view/blog"
 
 templ Projects() {
-	<div class="flex flex-col gap-8">
+	<div class="flex flex-col gap-4">
 		<h2 class="text-3xl font-bold w-36">Projects</h2>
 		<div class="flex flex-col gap-8">
 			@SESProject()
@@ -13,10 +13,10 @@ templ Projects() {
 
 templ SESProject() {
 	<div class="flex flex-col items-center justify-center text-center rounded-2xl bg-gray-200 dark:bg-gray-700 shadow-2xl min-h-96">
-		<h2 class="pt-20 w-2/5 text-2xl font-medium">
+		<h2 class="lg:pt-20 pt-10 w-4/5 md:w-2/5 text-2xl font-medium">
 			Scalable, On-Demand Application Provisioning using Kubernetes
 		</h2>
-		<h3 class="pt-8 text-base font-medium">
+		<h3 class="pt-4 lg:pt-8 text-base font-medium">
 			Simple Environment Service
 		</h3>
 		@blog.SESDashboardMarkup("pt-12 w-3/5 h-auto object-cover")

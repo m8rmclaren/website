@@ -3,10 +3,10 @@ package view
 import "github.com/m8rmclaren/website/template/components"
 
 templ Skills() {
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-8">
 		<!-- Skills & Open bracket -->
 		<h2 class="text-3xl font-bold">Skills <span class="font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span></h2>
-		<div class="flex flex-col pl-4 gap-16">
+		<div class="flex flex-col pl-6 gap-14">
 			@skills()
 			@stack()
 		</div>
@@ -26,7 +26,7 @@ templ skills() {
 			</p>
 			<p>
 				@components.InlineGithubLink("The site you're looking at", "https://github.com/m8rmclaren/website")
-				is built with HTML and CSS, served by a Go webserver, deployed to Kubernetes via ArgoCD. Its infrastructure is provisioned with
+				is built with Go and Templ, which render static HTML and CSS that are served directly to the browser. It's deployed to Kubernetes using ArgoCD, and the infrastructure is provisioned via
 				@components.InlineGithubLink("Terraform", "https://github.com/m8rmclaren/infra")
 				.
 			</p>
