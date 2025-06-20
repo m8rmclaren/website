@@ -38,27 +38,24 @@ func main() {
 	e.Static("/", staticDirectory)
 
 	// Add index route
+	indexConfig := view.NewPageConfig("Hayden Roszell", "Full-stack engineer specializing in Kubernetes, Go, and cloud-native infrastructure.")
 	e.GET("/", func(c echo.Context) error {
-		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
+		c.Logger().Printf("Serving GET / [ip %s]", c.RealIP())
+		return render.Html(c, view.Page(indexConfig, view.Index()))
 	})
 
 	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
+		description := "Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes"
 		c.Logger().Printf("Serving GET /blog/simple-environment-service [ip %s]", c.RealIP())
 		config := blog.NewBlogPostConfig(
-			"Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes",
+			description,
 			"How I built a scalable, declarative platform that deploys and configures apps in Kubernetes for dev, demo, and testing using Go and ArgoCD.",
 			"Hayden Roszell",
 			"Jun 18, 2025",
 			"/images/headshot.jpeg",
 			12,
 		)
-		return render.Html(c, view.Page("Click to Deploy", blog.BlogPost(config, blog.SESBlog())))
-	})
-
-	// Add index route
-	e.GET("/", func(c echo.Context) error {
-		c.Logger().Printf("Serving GET / [ip %s]", c.RealIP())
-		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
+		return render.Html(c, view.Page(view.NewPageConfig("Click to Deploy", description), blog.BlogPost(config, blog.SESBlog())))
 	})
 
 	// Start the server in a goroutine
