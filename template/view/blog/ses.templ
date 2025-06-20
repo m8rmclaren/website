@@ -64,7 +64,7 @@ templ systemOverview() {
 	</p>
 	@components.Image("/images/ses/framed_create_form_browser.png", "Create Form")
 	<p>
-		Once the creation request reaches the backend, the service kicks off an asynchronous, idempotent workflow for each application requested that provisions secrets, configures identity providers, and deploys resources in our cloud provider. Once the external services are ready, it serializes application configuration values and sends them to ArgoCD in an Application resource.
+		Once the creation request reaches the backend, the service kicks off an asynchronous, idempotent workflow for each application requested that provisions secrets, configures identity providers, and deploys resources in our cloud provider
 	</p>
 	<p>
 		Once external services and configuration are ready, the service serializes the configuration to a declarative application spec and sends it to ArgoCD in an Application resource. ArgoCD ensures that the resources are created and remain in sync. Resources in an environment are scoped to their own Kubernetes namespace to isolate them from other environments and making it easy to tear down or recreate.
@@ -138,7 +138,7 @@ templ networking() {
 		and 
 		@components.InlineBold("sidecar proxies ")
 		, every connection between services was secured by default. Plus, we got built-in 
-		@components.InlineBold("observability ")
+		@components.InlineBold("observability")
 		: latency, error rates, and traffic metrics at the network level — no extra instrumentation needed.
 	</p>
 }
@@ -210,11 +210,11 @@ templ iac() {
 		<li>
 			@components.InlineBold("Azure DNS ")
 			, with
-			@components.InlineBold("external-dns ")
+			@components.InlineBold(" external-dns ")
 			in-cluster to create A records automatically when HTTPRoute resources are sent to Kubernetes
 		</li>
 		<li>
-			@components.InlineBold("Azure SQL Server")
+			@components.InlineBold("Azure SQL Server ")
 			backed by Elastic Pools for cost-effective scalability
 		</li>
 		<li>
