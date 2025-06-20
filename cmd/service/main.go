@@ -43,6 +43,7 @@ func main() {
 	})
 
 	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
+		c.Logger().Printf("Serving GET /blog/simple-environment-service [ip %s]", c.RealIP())
 		config := blog.NewBlogPostConfig(
 			"Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes",
 			"How I built a scalable, declarative platform that deploys and configures apps in Kubernetes for dev, demo, and testing using Go and ArgoCD.",
@@ -56,6 +57,7 @@ func main() {
 
 	// Add index route
 	e.GET("/", func(c echo.Context) error {
+		c.Logger().Printf("Serving GET / [ip %s]", c.RealIP())
 		return render.Html(c, view.Page("Hayden Roszell", view.Index()))
 	})
 
