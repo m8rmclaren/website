@@ -2,7 +2,7 @@ module github.com/m8rmclaren/website
 
 go 1.23.2
 
-require github.com/a-h/templ v0.3.898
+require github.com/a-h/templ v0.3.906
 
 require (
 	github.com/labstack/echo/v4 v4.13.4 // indirect
