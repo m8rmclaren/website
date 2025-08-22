@@ -55,14 +55,14 @@ templ systemOverview() {
 		@components.InlineItalics("\"I need a dev environment with these three apps configured like this\" ")
 		and translate it into concrete applications deployed and configured in Kubernetes. I wanted the service to maintain the entire lifecycle of the applications it deployed, from creation, modification, and eventual deletion when its purpose was served.
 	</p>
-	@components.Image("/images/ses/service-k8s-architecture.png", "System Overview")
+	@components.Image("/images/ses/service-k8s-architecture.png", "System Overview", "")
 	<p>
 		At the heart of the service is a Go backend that exposes a REST API. The service listens for incoming requests from the UI, processes them, and coordinates everything needed to bring a new environment to life
 	</p>
 	<p>
 		The frontend itself is built with Next.js and gives users a simple interface to interact with the system. They can see a dashboard of their active environments, dispatch actions like reboot and sync, and spin up new environments on demand. From a user’s perspective, it feels like filling out a form and clicking a button. 
 	</p>
-	@components.Image("/images/ses/framed_create_form_browser.png", "Create Form")
+	@components.Image("/images/ses/framed_create_form_browser.png", "Create Form", "")
 	<p>
 		Once the creation request reaches the backend, the service kicks off an asynchronous, idempotent workflow for each application requested that provisions secrets, configures identity providers, and deploys resources in our cloud provider
 	</p>
@@ -91,7 +91,7 @@ templ configAndState() {
 	<p>
 		Speaking of the API, each application type has its own set of REST endpoints, offering full CRUD operations. This modular design made it easy to manage each app's lifecycle independently, but it also introduced a challenge: coordination. Some applications depend on others being fully deployed and configured before they can start. That meant the service needed to orchestrate asynchronous workflows that were aware of each other, and more importantly, aware of where other deployments were in their lifecycle.
 	</p>
-	@components.Image("/images/ses/ha.png", "High Availability")
+	@components.Image("/images/ses/ha.png", "High Availability", "")
 	<p>
 		To solve this, I introduced Redis as a shared job state store. Whenever a deployment job runs, it writes its status to Redis. Other jobs can then check this state before moving forward. This approach allowed the service to scale horizontally — deployment jobs could be picked up by any node in the cluster, while still maintaining awareness of the larger environment-level workflow.
 	</p>
@@ -123,7 +123,7 @@ templ networking() {
 		@components.InlineBold("Kubernetes Gateway API ")
 		.
 	</p>
-	@components.Image("/images/ses/networking.png", "Networking")
+	@components.Image("/images/ses/networking.png", "Networking", "")
 	<p>
 		Rather than provisioning one Gateway per environment or wiring up hundreds of rules at the cloud layer, I deployed a single, shared Istio Gateway in the cluster. Istio creates a backing Kubernetes LoadBalancer Service per Gateway. In turn, the cloud provider Controller running in Kubernetes creates a public IP and cloud Load Balancer with a single ruleset targeting the Service in Kubernetes.
 	</p>
@@ -151,7 +151,7 @@ templ logsAndMetrics() {
 	<p>
 		When I built the Simple Environment Service, I knew I needed a structured, scalable way to collect logs from each application across environments and surface them in a way that users could actually use. After evaluating a few options, I chose the Elastic Stack because it scales beautifully, and its query and visualization capabilities are incredibly powerful.
 	</p>
-	@components.Image("/images/ses/logs_and_metrics_pipeline.png", "Logs and Metrics Pipeline")
+	@components.Image("/images/ses/logs_and_metrics_pipeline.png", "Logs and Metrics Pipeline", "")
 	<p>
 		Elastic is deployed using the ECK (Elastic Cloud on Kubernetes) operator, which made it easy to bring up the full stack as a set of managed Kubernetes resources. That includes 
 		@components.InlineBold("Filebeat ")
@@ -166,13 +166,13 @@ templ logsAndMetrics() {
 	<p>
 		With this pipeline in place, logs from every container — across every environment — are automatically picked up, parsed, and shipped to Elasticsearch. From the user’s perspective,  they log into the Simple Environment Service dashboard, click the “Logs” button on their environment, and are taken directly to Kibana, pre-filtered to show logs from their specific namespace.
 	</p>
-	@components.Image("/images/ses/elastic.png", "Elastic")
+	@components.Image("/images/ses/elastic.png", "Elastic", "")
 	<p>
 		Metrics were the other half of the observability equation. For that, I deployed the 
 		@components.InlineBold("kube-prometheus-stack")
 		, which bundles Prometheus, Grafana, Alertmanager, and a set of Kubernetes exporters. This gave us deep insight into compute usage, network traffic, pod health, and more — all without having to manually configure scrape targets or exporters.
 	</p>
-	@components.Image("/images/ses/prometheus.png", "Prometheus")
+	@components.Image("/images/ses/prometheus.png", "Prometheus", "")
 	<p>
 		Together, Elastic and Prometheus gave the system full-stack visibility — logs for what happened and metrics for how it’s performing.
 	</p>

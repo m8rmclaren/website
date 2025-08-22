@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/m8rmclaren/website/internal/image"
 	"github.com/m8rmclaren/website/internal/render"
 	"github.com/m8rmclaren/website/template/view"
 	"github.com/m8rmclaren/website/template/view/blog"
@@ -44,6 +45,7 @@ func main() {
 		return render.Html(c, view.Page(indexConfig, view.Index()))
 	})
 
+	// Add SES blog post route
 	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
 		description := "Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes"
 		c.Logger().Printf("Serving GET /blog/simple-environment-service [ip %s]", c.RealIP())
@@ -57,6 +59,9 @@ func main() {
 		)
 		return render.Html(c, view.Page(view.NewPageConfig("Click to Deploy", description), blog.BlogPost(config, blog.SESBlog())))
 	})
+
+	// Add image optimizer route
+	e.GET("_image", image.NewImageOptimizer().Handler())
 
 	// Start the server in a goroutine
 	go func() {

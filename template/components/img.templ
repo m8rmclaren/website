@@ -1,5 +1,18 @@
 package components
 
-templ Image(href, alt string) {
-	<img src={ href } alt={ alt } class="h-auto w-full object-cover md:w-auto"/>
+// Image is a wrapper to <img /> - class is set to "h-auto w-full object-cover md:w-auto"
+// if the passed value is empty
+templ Image(href, alt, class string) {
+	<img
+		src={ href }
+		alt={ alt }
+		loading="lazy"
+		decoding="async"
+		if class == "" {
+			class="h-auto w-full object-cover md:w-auto"
+		}
+		if class != "" {
+			class={ class }
+		}
+	/>
 }
