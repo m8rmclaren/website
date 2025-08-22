@@ -1,6 +1,6 @@
 module github.com/m8rmclaren/website
 
-go 1.23.2
+go 1.25.0
 
 require (
 	github.com/a-h/templ v0.3.943
@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/cshum/vipsgen v1.1.2 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

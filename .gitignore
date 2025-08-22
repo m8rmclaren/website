@@ -13,3 +13,4 @@ pnpm-lock.yaml
 tmp/
 tailwind.log
 .DS_Store
+vips
