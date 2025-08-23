@@ -3,9 +3,7 @@ package image
 import (
 	"fmt"
 	"io"
-	"net/http"
 
-	"github.com/m8rmclaren/website/internal/util"
 	"github.com/m8rmclaren/website/vips"
 )
 
@@ -20,14 +18,15 @@ type webpSaver struct {
 	writer io.WriteCloser
 }
 
-func newWebpSaver(writer http.ResponseWriter) *webpSaver {
+func newWebpSaver(writer io.WriteCloser) *webpSaver {
 	return &webpSaver{
-		writer: util.WrapResponseWriter(writer),
+		writer: writer,
 	}
 }
 
 // save implements saver.
 func (w *webpSaver) save(img *vips.Image) error {
+
 	target := vips.NewTarget(w.writer)
 	defer target.Close()
 

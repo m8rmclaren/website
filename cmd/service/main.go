@@ -10,10 +10,12 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/m8rmclaren/website/internal/cache"
 	"github.com/m8rmclaren/website/internal/image"
 	"github.com/m8rmclaren/website/internal/render"
 	"github.com/m8rmclaren/website/template/view"
 	"github.com/m8rmclaren/website/template/view/blog"
+	"github.com/m8rmclaren/website/vips"
 )
 
 func main() {
@@ -24,6 +26,9 @@ func main() {
 	flag.StringVar(&staticDirectory, "static-root", "static", "The address the service will bind to")
 
 	flag.Parse()
+
+	// Setup libvips
+	vips.Startup(nil)
 
 	// Setup Echo
 	e := echo.New()
@@ -61,7 +66,7 @@ func main() {
 	})
 
 	// Add image optimizer route
-	e.GET("_image", image.NewImageOptimizer(staticDirectory, e.Logger).Handler())
+	e.GET("_image", image.NewImageOptimizer(staticDirectory, e.Logger, cache.NewSimpleCache(0)).Handler())
 
 	// Start the server in a goroutine
 	go func() {
@@ -79,6 +84,8 @@ func main() {
 	// Create a deadline to wait for the shutdown
 	ctxShutDown, cancelTimeout := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelTimeout()
+
+	vips.Shutdown()
 
 	if err := e.Shutdown(ctxShutDown); err != nil {
 		e.Logger.Fatalf("server shutdown failed:%+v", err)

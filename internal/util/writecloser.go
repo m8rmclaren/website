@@ -6,11 +6,11 @@ import (
 )
 
 type writeCloser struct {
-	http.ResponseWriter
+	io.Writer
 }
 
 func (wc writeCloser) Close() error {
-	if f, ok := wc.ResponseWriter.(http.Flusher); ok {
+	if f, ok := wc.Writer.(http.Flusher); ok {
 		f.Flush()
 	}
 	return nil

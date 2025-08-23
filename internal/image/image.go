@@ -1,10 +1,11 @@
 package image
 
 import (
+	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -14,6 +15,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/m8rmclaren/website/internal/api"
+	"github.com/m8rmclaren/website/internal/cache"
+	"github.com/m8rmclaren/website/internal/util"
 	"github.com/m8rmclaren/website/vips"
 )
 
@@ -32,15 +35,22 @@ var (
 	libvpsSaveError     = fmt.Errorf("%w: save error", libvipsError)
 )
 
+type bufferWriteCloser struct{ buf *bytes.Buffer }
+
+func (b bufferWriteCloser) Write(p []byte) (int, error) { return b.buf.Write(p) }
+func (b bufferWriteCloser) Close() error                { return nil } // no-op
+
 type optimizer struct {
 	staticDirectoryName string
 	logger              echo.Logger
+	cache               cache.Cache
 }
 
-func NewImageOptimizer(staticDirectoryName string, logger echo.Logger) *optimizer {
+func NewImageOptimizer(staticDirectoryName string, logger echo.Logger, cache cache.Cache) *optimizer {
 	return &optimizer{
 		staticDirectoryName: staticDirectoryName,
 		logger:              logger,
+		cache:               cache,
 	}
 }
 
@@ -62,27 +72,57 @@ func (o *optimizer) Handler() echo.HandlerFunc {
 		startTime := time.Now()
 		res := c.Response()
 
-		// Select the appropriate image saver depending on Accept headers
-		var saver saver
-		saver = newWebpSaver(res.Writer)
-
 		// Prepare response headers up front - response is streamed to requestor
 		res.Header().Set(echo.HeaderContentType, "image/webp")
 		res.WriteHeader(http.StatusOK)
+
+		// Prepare a multi-write closer to stream output to a buffer for cache and to the response
+		var buf bytes.Buffer
+		mw := util.NewMultiWriteCloser([]io.WriteCloser{
+			util.WrapResponseWriter(res.Writer),
+			bufferWriteCloser{buf: &buf},
+		})
+
+		// Select the appropriate image saver depending on Accept headers
+		var saver saver
+		saver = newWebpSaver(mw)
+
+		cacheKey := imageCacheKey(imageSource, width)
+		cachedImage, hit, err := o.cache.Get(context.Background(), cacheKey)
+		if err != nil {
+			return err
+		}
+
+		if hit {
+			_, err = res.Write(cachedImage)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
 
 		err = o.resizeToWriter(imageSource, width, saver)
 		switch {
 		case errors.Is(err, errFileNotFound):
 			api.RespondError(c, http.StatusNotFound, err)
 			return nil
+		case err != nil:
+			api.RespondError(c, http.StatusInternalServerError, fmt.Errorf("couldn't generate properly sized image"))
+			return nil
 		}
 		c.Logger().Printf("Resized %s [w=%d] in %s", imageSource, width, time.Since(startTime))
+
+		err = o.cache.Set(context.Background(), cacheKey, buf.Bytes())
+		if err != nil {
+			return err
+		}
 
 		return nil
 	}
 }
 
 func (o *optimizer) resizeToWriter(path string, width int, saver saver) error {
+
 	filePath := filepath.Join(o.staticDirectoryName, strings.TrimLeft(path, "/"))
 
 	if _, err := os.Stat(filePath); err != nil {
@@ -110,6 +150,7 @@ func (o *optimizer) resizeToWriter(path string, width int, saver saver) error {
 	}
 	scale := float64(width) / float64(inW)
 	if scale > 1 {
+		o.logger.Printf("Not scaling %s [w=%d] since scale factor is %.3f", filePath, width, scale)
 		scale = 1 // don’t upscale images
 	}
 
@@ -138,7 +179,7 @@ func (o *optimizer) resizeToWriter(path string, width int, saver saver) error {
 	return saver.save(img)
 }
 
-func (o *optimizer) thumbnailToWriter(path string, width int, out io.WriteCloser) error {
+func (o *optimizer) thumbnailToWriter(path string, width int, saver saver) error {
 	filePath := filepath.Join(o.staticDirectoryName, strings.TrimLeft(path, "/"))
 
 	if _, err := os.Stat(filePath); err != nil {
@@ -183,18 +224,9 @@ func (o *optimizer) thumbnailToWriter(path string, width int, out io.WriteCloser
 	// 	return fmt.Errorf("%w: %w", libvipsSharpenError, err)
 	// }
 
-	target := vips.NewTarget(out)
-	defer target.Close()
+	return saver.save(img)
+}
 
-	// Save the result as WebP target with options
-	err = img.WebpsaveTarget(target, &vips.WebpsaveTargetOptions{
-		Q:              100,  // Quality factor (0-100)
-		Effort:         0,    // Compression effort (0-6)
-		SmartSubsample: true, // Better chroma subsampling
-	})
-	if err != nil {
-		log.Fatalf("Failed to save image as WebP: %v", err)
-	}
-
-	return nil
+func imageCacheKey(href string, w int) string {
+	return fmt.Sprintf("cache:%s:w", href, w)
 }
