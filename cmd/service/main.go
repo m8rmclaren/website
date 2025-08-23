@@ -10,9 +10,12 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/m8rmclaren/website/internal/cache"
+	"github.com/m8rmclaren/website/internal/image"
 	"github.com/m8rmclaren/website/internal/render"
 	"github.com/m8rmclaren/website/template/view"
 	"github.com/m8rmclaren/website/template/view/blog"
+	"github.com/m8rmclaren/website/vips"
 )
 
 func main() {
@@ -23,6 +26,9 @@ func main() {
 	flag.StringVar(&staticDirectory, "static-root", "static", "The address the service will bind to")
 
 	flag.Parse()
+
+	// Setup libvips
+	vips.Startup(nil)
 
 	// Setup Echo
 	e := echo.New()
@@ -44,6 +50,7 @@ func main() {
 		return render.Html(c, view.Page(indexConfig, view.Index()))
 	})
 
+	// Add SES blog post route
 	e.GET("/blog/simple-environment-service", func(c echo.Context) error {
 		description := "Click to Deploy: Scalable, On-Demand Application Provisioning using Kubernetes"
 		c.Logger().Printf("Serving GET /blog/simple-environment-service [ip %s]", c.RealIP())
@@ -57,6 +64,9 @@ func main() {
 		)
 		return render.Html(c, view.Page(view.NewPageConfig("Click to Deploy", description), blog.BlogPost(config, blog.SESBlog())))
 	})
+
+	// Add image optimizer route
+	e.GET("_image", image.NewImageOptimizer(staticDirectory, e.Logger, cache.NewSimpleCache(0)).Handler())
 
 	// Start the server in a goroutine
 	go func() {
@@ -74,6 +84,8 @@ func main() {
 	// Create a deadline to wait for the shutdown
 	ctxShutDown, cancelTimeout := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelTimeout()
+
+	vips.Shutdown()
 
 	if err := e.Shutdown(ctxShutDown); err != nil {
 		e.Logger.Fatalf("server shutdown failed:%+v", err)

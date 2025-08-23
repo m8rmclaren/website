@@ -163,12 +163,6 @@ else
     add_operation "start_website_dev"
 fi
 
-add_verb "lint"
-add_operation "lint_website"
-
-add_verb "build"
-add_operation "build_website"
-
 add_verb "build"
 add_operation "build_containers"
 

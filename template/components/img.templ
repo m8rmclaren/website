@@ -1,5 +1,46 @@
 package components
 
-templ Image(href, alt string) {
-	<img src={ href } alt={ alt } class="h-auto w-full object-cover md:w-auto"/>
+import (
+	"fmt"
+	"net/url"
+	"strconv"
+	"strings"
+)
+
+func imageURL(src string, w int) string {
+	u := url.URL{Path: "/_image"}
+	q := u.Query()
+	q.Set("src", src)           // use the raw src; Query.Encode will escape it
+	q.Set("w", strconv.Itoa(w)) // width
+	u.RawQuery = q.Encode()
+	return u.String()
+}
+
+func srcset(href string) string {
+	widths := []int{320, 640, 768, 1024, 1280}
+	srcsetParts := make([]string, len(widths))
+	for i, w := range widths {
+		srcsetParts[i] = fmt.Sprintf("%s %dw", imageURL(href, w), w)
+	}
+	return strings.Join(srcsetParts, ", ")
+}
+
+// Image is a wrapper to <img /> - class is set to "h-auto w-full object-cover md:w-auto"
+// if the passed value is empty
+templ Image(href, alt, class string) {
+	<!-- TODO 768 may not be a reasonable default -->
+	<img
+		src={ imageURL(href, 768) }
+		srcset={ srcset(href) }
+		sizes="(min-width: 768px) 33vw, 100vw"
+		alt={ alt }
+		loading="lazy"
+		decoding="async"
+		if class == "" {
+			class="h-auto w-full object-cover md:w-auto"
+		}
+		if class != "" {
+			class={ class }
+		}
+	/>
 }

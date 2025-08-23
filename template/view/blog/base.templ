@@ -1,5 +1,7 @@
 package blog
 
+import "github.com/m8rmclaren/website/template/components"
+
 type BlogPostConfig struct {
 	Title               string
 	Description         string
@@ -41,7 +43,7 @@ templ BlogPost(config BlogPostConfig, content templ.Component) {
 				</h2>
 			}
 			<div class="flex flex-row items-center pt-4">
-				<img src={ config.ProfilePictureRoute } alt="Profile" class="rounded-full h-auto w-10 object-cover"/>
+				@components.Image(config.ProfilePictureRoute, "Profile", "rounded-full h-auto w-10 object-cover")
 				<p class="pl-2">{ config.Author }</p>
 				<p class="pl-8 font-extralight text-sm">{ config.MinutesToRead } minutes to read</p>
 				<p class="pl-2 font-extralight">&#x2022;</p>
