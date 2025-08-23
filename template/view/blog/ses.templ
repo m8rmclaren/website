@@ -3,16 +3,7 @@ package blog
 import "github.com/m8rmclaren/website/template/components"
 
 templ SESDashboardMarkup(class string) {
-	<img
-		src="/images/ses/framed_ses_dashboard_browser_2.png"
-		alt="SES Dashboard Markup"
-		if class == "" {
-			class="h-auto w-full object-cover md:w-auto"
-		}
-		if class != "" {
-			class={ class }
-		}
-	/>
+	@components.Image("/images/ses/framed_ses_dashboard_browser_2.png", "SES Dashboard Markup", class)
 }
 
 templ SESBlog() {

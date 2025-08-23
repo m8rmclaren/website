@@ -61,7 +61,7 @@ func main() {
 	})
 
 	// Add image optimizer route
-	e.GET("_image", image.NewImageOptimizer().Handler())
+	e.GET("_image", image.NewImageOptimizer(staticDirectory, e.Logger).Handler())
 
 	// Start the server in a goroutine
 	go func() {

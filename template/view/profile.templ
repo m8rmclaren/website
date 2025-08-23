@@ -4,7 +4,7 @@ import "github.com/m8rmclaren/website/template/components"
 
 templ About() {
 	<div class="flex flex-col md:flex-row gap-4 pb-4">
-		<img src="/images/bendy_profile.jpeg" alt="Profile" class="shadow-2xl rounded-2xl h-auto w-full max-h-96 object-cover object-top md:h-96 md:w-auto"/>
+		@components.Image("/images/bendy_profile.jpeg", "Profile", "shadow-2xl rounded-2xl h-auto w-full max-h-96 object-cover object-top md:h-96 md:w-auto")
 		<div class="flex flex-col justify-between gap-4">
 			@profile()
 			@links()

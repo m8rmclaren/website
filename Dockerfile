@@ -89,5 +89,6 @@ COPY --from=builder /workspace/service /app/service
 COPY static/ static/
 COPY --from=tailwind /app/static/output.css static/output.css
 
+EXPOSE 3000
 USER 65532:65532
 ENTRYPOINT ["/app/service"]
