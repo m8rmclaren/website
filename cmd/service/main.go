@@ -3,9 +3,12 @@ package main
 import (
 	"context"
 	"flag"
+	"mime"
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -43,8 +46,32 @@ func main() {
 	// (serve any file from static directory for path /*)
 	e.Static("/", staticDirectory)
 
+	e.GET("/download/:name", func(c echo.Context) error {
+		name := filepath.Base(c.Param("name")) // prevent path traversal
+		full := filepath.Join(staticDirectory, name)
+
+		if _, err := os.Stat(full); err != nil {
+			if os.IsNotExist(err) {
+				return echo.NewHTTPError(http.StatusNotFound, "file not found")
+			}
+			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		}
+		c.Logger().Printf("Sending %s to [ip %s]", name, c.RealIP())
+
+		// Set a sensible Content-Type
+		ext := strings.ToLower(filepath.Ext(name))
+		ct := mime.TypeByExtension(ext)
+		if ct == "" {
+			ct = "application/octet-stream"
+		}
+		c.Response().Header().Set(echo.HeaderContentType, ct)
+
+		// Force download prompt with a filename
+		return c.Attachment(full, name)
+	})
+
 	// Add index route
-	indexConfig := view.NewPageConfig("Hayden Roszell", "Full-stack engineer specializing in Kubernetes, Go, and cloud-native infrastructure.")
+	indexConfig := view.NewPageConfig("Hayden Roszell", "Full-stack engineer.")
 	e.GET("/", func(c echo.Context) error {
 		c.Logger().Printf("Serving GET / [ip %s]", c.RealIP())
 		return render.Html(c, view.Page(indexConfig, view.Index()))

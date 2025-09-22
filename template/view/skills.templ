@@ -3,32 +3,21 @@ package view
 import "github.com/m8rmclaren/website/template/components"
 
 templ Skills() {
-	<div class="flex flex-col gap-8">
-		<!-- Skills & Open bracket -->
-		<h2 class="text-3xl font-bold">Skills <span class="font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span></h2>
-		<div class="flex flex-col pl-6 gap-14">
-			@skills()
-			@stack()
-		</div>
-		<!-- Close bracket -->
-		<div class="text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#125;</div>
-	</div>
+	@components.OpenCloseBracketSection("Skills", skills())
+	@components.OpenCloseBracketSection("My Stack", stack())
 }
 
 templ skills() {
 	<div class="flex flex-col md:flex-row justify-stretch gap-8">
 		<div class="flex flex-col gap-4 md:w-96">
 			<p>
-				I’m a full-stack engineer with hands-on experience across the stack — building backend services, frontend UIs, Kubernetes operators, CI/CD pipelines, and cloud infrastructure using Terraform and Pulumi.
+				I’m a full-stack engineer with hands-on experience across the stack. With my skills and tenacity, I can take ideas from concept to reality, end-to-end. I've built backend services, frontend UIs, CI/CD pipelines, and cloud infrastructure.
 			</p>
 			<p>
-				I also work across infrastructure and IT layers — managing Linux systems, implementing OAuth2/OIDC flows, and configuring networking with DNS, load balancers, and app gateways.
+				I work comfortably across infrastructure and application layers. I've managed Linux systems, implemented OAuth2/OIDC authentication flows, and configured networking with DNS, load balancers, and application gateways. I enjoy understanding how things work at a fundamental level and build with best practices, not quick hacks.
 			</p>
 			<p>
-				@components.InlineGithubLink("The site you're looking at", "https://github.com/m8rmclaren/website")
-				is built with Go+Templ and serves static HTML to the browser. It's deployed to Kubernetes using ArgoCD, and the infrastructure is provisioned via
-				@components.InlineGithubLink("Terraform", "https://github.com/m8rmclaren/infra")
-				.
+				I've worked on teams big and small, on projects as high-stake as a satellite that's currently orbiting Earth, and as small as tools that streamline very specific workflows.
 			</p>
 		</div>
 		@software()
@@ -43,11 +32,13 @@ templ software() {
 			</h3>
 			<div class="flex flex-col gap-2">
 				@tool("Go", components.GoIcon("w-8"))
-				@tool("Python", components.PythonIcon("w-6"))
 				@tool("TypeScript", components.TypescriptIcon("w-5"))
+				@tool("Python", components.PythonIcon("w-6"))
+				@tool("Swift", components.SwiftIcon("w-6"))
 				@tool("C# (.NET)", components.CSharpIcon("w-6"))
 				@tool("C", components.CIcon("w-5"))
 				@tool("Bash", components.BashIcon("w-6"))
+				@tool("PowerShell", components.PowershellIcon("w-6"))
 			</div>
 		</div>
 		<div class="bg-[#4876A2] h-full w-2 rounded-2xl shadow-md transition-opacity duration-300 opacity-100 z-50"></div>
@@ -56,11 +47,13 @@ templ software() {
 				Infrastructure
 			</h3>
 			<div class="flex flex-col gap-2">
+				@tool("Github", components.GithubIcon("w-6 fill-[#24292F] dark:fill-white"))
 				@tool("Github Actions", components.GithubActionsIcon("w-6"))
 				@tool("Terraform", components.TerraformIcon("w-6"))
 				@tool("Kubernetes", components.KubernetesIcon("w-6"))
 				@tool("Istio", components.IstioIcon("w-5"))
 				@tool("ArgoCD", components.ArgoCDIcon("w-6"))
+				@tool("Elastic Stack", components.ElasticStackIcon("w-6"))
 			</div>
 		</div>
 		<div class="bg-[#4876A2] h-full w-2 rounded-2xl shadow-md transition-opacity duration-300 opacity-100 z-50"></div>
@@ -82,12 +75,20 @@ templ stack() {
 		<div class="flex flex-col gap-4 md:w-96">
 			<p>
 				Effective engineering starts with the right tools. I’ve spent years curating a setup that supports fast, focused development by maximizing productivity and minimizing mental overhead.
+			</p>
+			<p>
+				I've narrowed in on the tools that comprise my stack based on the principle that tools & workflows that I touch & work with daily should effectively be an extension of my spine.
+			</p>
+			<p>
+				The core of my environment is macOS, customized with Yabai for tiling window management, tmux for terminal multiplexing, and Neovim for editing.
+			</p>
+			<p>
 				@components.InlineGithubLink("dotfiles", "https://github.com/m8rmclaren/dotfiles")
 			</p>
 		</div>
 		<div class="flex flex-row items-center gap-2 flex-wrap">
-			@tool("MacOS", components.MacOSIcon("w-6"))
-			@tool("Yabai", components.YabaiIcon("w-6"))
+			@tool("MacOS", components.MacOSIcon("w-6 6 fill-[#24292F] dark:fill-white"))
+			@tool("Yabai", components.YabaiIcon("w-6 6 fill-[#24292F] dark:fill-white"))
 			@tool("ITerm2", components.ITerm2Icon("w-6"))
 			@tool("Tmux", components.TmuxIcon("w-6"))
 			@tool("Neovim", components.NeovimIcon("w-5"))

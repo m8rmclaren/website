@@ -72,10 +72,6 @@ func (o *optimizer) Handler() echo.HandlerFunc {
 		startTime := time.Now()
 		res := c.Response()
 
-		// Prepare response headers up front - response is streamed to requestor
-		res.Header().Set(echo.HeaderContentType, "image/webp")
-		res.WriteHeader(http.StatusOK)
-
 		// Prepare a multi-write closer to stream output to a buffer for cache and to the response
 		var buf bytes.Buffer
 		mw := util.NewMultiWriteCloser([]io.WriteCloser{
@@ -86,6 +82,10 @@ func (o *optimizer) Handler() echo.HandlerFunc {
 		// Select the appropriate image saver depending on Accept headers
 		var saver saver
 		saver = newWebpSaver(mw)
+
+		// Prepare response headers up front - response is streamed to requestor
+		res.Header().Set(echo.HeaderContentType, saver.contentType())
+		res.WriteHeader(http.StatusOK)
 
 		cacheKey := imageCacheKey(imageSource, width)
 		cachedImage, hit, err := o.cache.Get(context.Background(), cacheKey)
@@ -98,6 +98,7 @@ func (o *optimizer) Handler() echo.HandlerFunc {
 			if err != nil {
 				return err
 			}
+			c.Logger().Printf("Returned cached image for %s [w=%d] in %s", imageSource, width, time.Since(startTime))
 			return nil
 		}
 

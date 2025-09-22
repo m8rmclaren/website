@@ -18,10 +18,18 @@ templ profile() {
 			<h1 class="text-4xl font-bold">Hayden Roszell</h1>
 		</div>
 		<p>
-			Hi, I&apos;m Hayden. I'm a software engineer who builds systems with intention — rooted in fundamentals, driven by outcomes, and deeply connected to the tools I use. 
+			Hi, I'm Hayden. Over the past several years I've been designing infrastructure, building systems, writing code across stacks, and turning complex requirements into maintainable solutions.
 		</p>
 		<p>
-			I've spent the last several years building plugins, designing infrastructure, writing code across stacks, and turning complex requirements into maintainable systems. Recently, I&apos;ve been building systems and tools using Go and Kubernetes.
+			One of the most gratifying parts of being a software engineer for me is that I can manifest my ideas into reality with just my computer, an editor, and an internet connection.
+		</p>
+		<p>
+			I've worked on everything from 
+			@components.InlineBold("satellite communication systems")
+			& real-time embedded systems, to 
+			@components.InlineBold("modern cloud-native products & systems.")
+			I've worked as an engineer & as a product owner, and understand how to bridge the gap between 
+			@components.InlineBold("technical implementation and business goals.")
 		</p>
 	</div>
 }
@@ -45,6 +53,15 @@ templ links() {
 		>
 			@components.GithubIcon("w-8 fill-white")
 			Find me on Github
+		</a>
+		<a
+			href="/download/HaydenJRoszell.pdf"
+			download="HaydenJRoszell.pdf"
+			hx-boost="false"
+			class="text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
+		>
+			@components.DownloadIcon("w-8 fill-white")
+			CV
 		</a>
 	</div>
 }

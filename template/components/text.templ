@@ -1,5 +1,10 @@
 package components
 
+import (
+	"fmt"
+	"strings"
+)
+
 templ InlineGithubLink(text, href string) {
 	<a
 		class="ml-1 mr-1 inline-flex items-center gap-1 border border-gray-300 rounded px-1 transition-all duration-200 hover:border-gray-500 hover:px-2"
@@ -28,6 +33,7 @@ templ InlineItalics(text string) {
 	<span class="italic">{ text }</span>
 }
 
+// Trims leading whitespace & appends a single trailing space to text
 templ InlineBold(text string) {
-	<span class="font-medium">{ text }</span>
+	<span class="font-semibold">{ fmt.Sprintf("%s ", strings.TrimLeft(strings.TrimRight(text, " "), "")) }</span>
 }

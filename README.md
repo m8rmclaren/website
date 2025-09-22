@@ -1,4 +1,24 @@
-## Website
+<h1 align="center" style="border-bottom: none">
+    Welcome to my Personal Website
+</h1>
+
+<p align="center">
+  <!-- Badges -->
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/m8rmclaren/website/website-rc.yml?branch=main&style=flat-square&label=build">
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/m8rmclaren/website?include_prereleases&style=flat-square&label=version&color=%234876A2">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/m8rmclaren/website?style=flat-square">
+</p>
+
+<p align="center">
+  <!-- TOC -->
+  <a href="https://haydenroszell.com">
+    <b>View Live</b>
+  </a>
+  ·
+  <a href="#building-locally">
+    <b>Building Locally</b>
+  </a>
+</p>
 
 ## Building Locally
 
