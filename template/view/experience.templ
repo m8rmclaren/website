@@ -1,50 +1,97 @@
 package view
 
+import (
+	"context"
+	"html"
+	"io"
+	"regexp"
+	"strings"
+)
+
+func Text(s string) templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
+		_, err := io.WriteString(w, s) // will NOT escape; if you want escaping, use html/template or a safer writer
+		return err
+	})
+}
+
+templ keyfactorProductOwnerDescription() {
+	<p>
+		Worked directly with customers to ensure delivery of critical features in Keyfactor’s flagship and ancillary products.
+	</p>
+	<p>
+		Conducted internal and customer interviews to identify and prioritize optimizations that removed major pain points in deploying and scaling integrations with Keyfactor’s core products; follow-up interviews showed measurable improvements in customer deployment speed and reliability.
+	</p>
+	<p>
+		Led incident response when product defects caused customer outages: diagnosed issues, brought the right engineers into the investigation, and advocated for swift fixes and prioritized releases to restore service and maintain customer trust.
+	</p>
+}
+
+templ keyfactorIntegrationEngineerDescription() {
+	<p>
+		Implemented and shipped key integrations to platforms & applications such as Azure & Kubernetes. Contributed to open-source projects like SPIFFE SPIRE & Mender Artifact.
+	</p>
+	<p>
+		Streamlined internal documentation procurement processes to enhance consistency and clarity and reduce developer workloads.
+	</p>
+	<p>
+		Designed and implemented developer platform used by more than 20% of Keyfactor staff.
+	</p>
+}
+
+templ keyfactorIntegrationEngineerInternDescription() {
+	<p>
+		Conducted research for most popular DevOps tools to determine digital certificate usage.
+	</p>
+	<p>
+		Implemented and shipped integrations targeting cert-manager (K8s), Terraform, Hashicorp Vault
+	</p>
+}
+
+templ homeAdvisorITInternDescription() {
+	<p>
+		First-line IT support for a team of over 2,800 at HomeAdvisor.
+	</p>
+}
+
+templ erauSoftwareEngineeringDescription() {
+	<p>
+		Space Track
+	</p>
+}
+
 templ Experience() {
 	<div class="flex flex-col gap-2">
 		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-36">Experience</h2>
+			<h2 class="text-3xl font-bold w-36">Industry</h2>
 			<div class="flex flex-col gap-8">
 				@experienceCard(
 					"Keyfactor",
 					"Product Owner",
 					"Remote",
-					"November 2024-Current",
-					[]string{
-                        "Conducted internal interviews and implemented associated optimizations to resolve major pain points associated with deploying and scaling core product integrations.",
-						"Worked closely with customers to ensure delivery of critical features in Keyfactor’s flagship product and several ancillary products.",
-						"Contributed to official Keyfactor documentation site for configuring Keyfactor products with 3rd party providers.",
-					},
+					"November 2024-August 2025",
+					keyfactorProductOwnerDescription(),
 				)
 				@experienceCard(
 					"Keyfactor",
 					"Software Engineer - Integrations",
 					"Remote",
 					"May 2023-November 2024",
-					[]string{
-						"Implemented and shipped key integrations to platforms & applications such as Azure & Kubernetes. Contributed to open-source projects like SPIFFE SPIRE & Mender Artifact.",
-						"Streamlined internal documentation procurement processes to enhance consistency and clarity and reduce developer workloads.",
-						"Designed and implemented developer platform used by more than 20% of Keyfactor staff.",
-					},
+					keyfactorIntegrationEngineerDescription(),
 				)
 				@experienceCard(
 					"Keyfactor",
 					"Software Engineer Intern - Integrations",
 					"Remote",
 					"June 2020-May 2023",
-					[]string{
-						"Conducted research for most popular DevOps tools to determine digital certificate usage.",
-						"Implemented and shipped integrations targeting cert-manager (K8s), Terraform, Hashicorp Vault",
-					},
+					keyfactorIntegrationEngineerInternDescription(),
 				)
 				@experienceCard(
 					"Home Advisor",
 					"Service Desk Intern",
 					"Denver, CO",
 					"June 2017-August 2019",
-					[]string{
-						"First-line IT support for a team of over 2,800 at HomeAdvisor.",
-					},
+					homeAdvisorITInternDescription(),
 				)
 			</div>
 		</div>
@@ -54,30 +101,54 @@ templ Experience() {
 templ Education() {
 	<div class="flex flex-col gap-2">
 		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-36">Education</h2>
+			<h2 class="text-3xl font-bold w-36">Academia</h2>
 			@experienceCard(
 				"Embry-Riddle Aeronautical University",
 				"BS, Software Engineering",
 				"Prescott, AZ",
 				"August 2019-May 2023",
-				[]string{"Space Track"},
+				erauSoftwareEngineeringDescription(),
 			)
 		</div>
 	</div>
 }
 
-templ experienceCard(company, title, location, duration string, descriptionLines []string) {
+var boldRe = regexp.MustCompile(`\*\*(.+?)\*\*`)
+
+func parseBoldTempl(line string) templ.Component {
+	var b strings.Builder
+	last := 0
+
+	for _, m := range boldRe.FindAllStringSubmatchIndex(line, -1) {
+		start, end := m[0], m[1]
+		innerStart, innerEnd := m[2], m[3]
+
+		// Write text before **...**, escaped.
+		b.WriteString(html.EscapeString(line[last:start]))
+
+		// Write the bold span with escaped inner text.
+		b.WriteString(`<span class="font-bold">`)
+		b.WriteString(html.EscapeString(line[innerStart:innerEnd]))
+		b.WriteString(`</span>`)
+
+		last = end
+	}
+
+	// Write the trailing text, escaped.
+	b.WriteString(html.EscapeString(line[last:]))
+
+	// Important: tell Templ this is safe HTML so it won't escape the tags.
+	return templ.Raw(b.String())
+}
+
+templ experienceCard(company, title, location, duration string, description templ.Component) {
 	<div class="flex flex-col gap-1">
 		<h2 class="text-xl font-bold">{ company } &#x2022; { title }</h2>
 		<p class="font-medium">
 			{ location } &#x2022; { duration }
 		</p>
 		<div class="flex flex-col gap-2 pt-2">
-			for _, description := range descriptionLines {
-				<p>
-					{ description }
-				</p>
-			}
+			@description
 		</div>
 	</div>
 }

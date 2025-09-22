@@ -56,6 +56,7 @@ func main() {
 			}
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
+		c.Logger().Printf("Sending %s to [ip %s]", name, c.RealIP())
 
 		// Set a sensible Content-Type
 		ext := strings.ToLower(filepath.Ext(name))
