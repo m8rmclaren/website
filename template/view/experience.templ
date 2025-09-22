@@ -1,56 +1,91 @@
 package view
 
 import (
-	"context"
+	"github.com/m8rmclaren/website/template/components"
 	"html"
-	"io"
 	"regexp"
 	"strings"
 )
 
-func Text(s string) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
-		_, err := io.WriteString(w, s) // will NOT escape; if you want escaping, use html/template or a safer writer
-		return err
-	})
-}
-
 templ keyfactorProductOwnerDescription() {
 	<p>
-		Worked directly with customers to ensure delivery of critical features in Keyfactor’s flagship and ancillary products.
+		@components.InlineBold("Conducted internal and customer interviews")
+		to identify and prioritize optimizations that removed major pain points in deploying and scaling integrations with Keyfactor’s core products; follow-up interviews showed 
+		@components.InlineBold("measurable improvements")
+		in customer deployment speed and reliability.
 	</p>
 	<p>
-		Conducted internal and customer interviews to identify and prioritize optimizations that removed major pain points in deploying and scaling integrations with Keyfactor’s core products; follow-up interviews showed measurable improvements in customer deployment speed and reliability.
+		Worked with customers to capture needs, translate them into clear product requirements with business context, and guide features through 
+		@components.InlineBold("triage, development, testing, and release,")
+		{ "for" } Keyfactor's flagship and ancilliary products.
 	</p>
 	<p>
-		Led incident response when product defects caused customer outages: diagnosed issues, brought the right engineers into the investigation, and advocated for swift fixes and prioritized releases to restore service and maintain customer trust.
+		@components.InlineBold("Led incident response")
+		when product defects caused customer outages: diagnosed issues, brought the right engineers into the investigation, and advocated for swift fixes and prioritized releases to restore service and maintain customer trust.
 	</p>
 }
 
 templ keyfactorIntegrationEngineerDescription() {
 	<p>
-		Implemented and shipped key integrations to platforms & applications such as Azure & Kubernetes. Contributed to open-source projects like SPIFFE SPIRE & Mender Artifact.
+		Proposed, championed, and built the 
+		<a
+			href="/blog/simple-environment-service"
+			rel="noopener"
+			class="font-medium text-blue-600 underline decoration-blue-400 decoration-2 underline-offset-2 
+           transition-all duration-200 ease-in-out
+           hover:text-blue-800 hover:decoration-blue-600 hover:underline-offset-4
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+		>Simple Environment Service</a>
+		, a full-stack platform that lets teams spin up demo, development, and QA environments for Keyfactor’s enterprise products with an 
+		@components.InlineBold("intuitive UI.")
+		The UI and backend fully abstract the underlying infrastructure and product dependencies to deliver a reliable and repeatable workflow. The system was adopted by 
+		@components.InlineBold("20%+")
+		of staff, and scaled to 
+		@components.InlineBold("100+ environments")
+		across 
+		@components.InlineBold("40+ nodes,")
+		handling 
+		@components.InlineBold("1.8M+ daily")
+		HTTP requests and ingesting 
+		@components.InlineBold("68M+ log records")
+		per day. 
 	</p>
 	<p>
-		Streamlined internal documentation procurement processes to enhance consistency and clarity and reduce developer workloads.
+		Implemented and shipped core product integrations to Azure & GCP application gateways & certificate authorities.
 	</p>
 	<p>
-		Designed and implemented developer platform used by more than 20% of Keyfactor staff.
+		@components.InlineBold("Designed and led adoption")
+		of an automated documentation toolchain using 
+		@components.InlineBold("Python")
+		and 
+		@components.InlineBold("Jinja2")
+		to render standardized Markdown with templating. Advocated the approach to the engineering team and guided the 
+		@components.InlineBold("migration of 100+ repositories")
+		to the new format, improving consistency, reducing manual effort, and accelerating documentation updates.
 	</p>
 }
 
 templ keyfactorIntegrationEngineerInternDescription() {
 	<p>
-		Conducted research for most popular DevOps tools to determine digital certificate usage.
+		Researched and documented how 30+ DevOps tools use X.509 digital certificates, building a knowledge base that accelerated responses to customer technology inquiries for the Solutions Engineering team. 
 	</p>
 	<p>
-		Implemented and shipped integrations targeting cert-manager (K8s), Terraform, Hashicorp Vault
+		Wrote Kubernetes controllers to extend cert-manager issuance capabilities to Keyfactor Command & EJBCA.
+	</p>
+	<p>
+		Wrote HashiCorp Vault PKI engine to extend Vault PKI features to Keyfactor Command & EJBCA.
+	</p>
+	<p>
+		Wrote Terraform provider to enable configuration & certificate issuance with Keyfactor products.
 	</p>
 }
 
 templ homeAdvisorITInternDescription() {
 	<p>
 		First-line IT support for a team of over 2,800 at HomeAdvisor.
+	</p>
+	<p>
+		Coordinated incident response to proper teams during outages.
 	</p>
 }
 
