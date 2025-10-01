@@ -3,6 +3,7 @@ package view
 import (
 	"github.com/m8rmclaren/website/template/components"
 	"github.com/m8rmclaren/website/template/view/blog"
+	"strings"
 )
 
 templ Projects() {
@@ -14,7 +15,7 @@ templ Projects() {
 				tagline:           "Testing memory resilience in the harshness of Earth orbit",
 				imageSrc:          "/images/eaglesat/eaglesat-2-orbiting-earth.png",
 				imagePlaceholder:  "EagleSat-2 Orbiting Earth Render",
-				articleHref:       "/blog/simple-environment-service",
+				articleHref:       "https://www.linkedin.com/feed/update/urn:li:activity:7379209278949289985/",
 				articleButtonText: "Read the Post",
 				currentStatusText: "Launched on September 14, 2025 aboard the Cygnus XL NG-23 mission on a SpaceX Falcon 9",
 			})
@@ -109,6 +110,9 @@ templ projectCard(project project) {
 		<div class="pt-8 pb-4">
 			<a
 				href={ project.articleHref }
+				if strings.HasPrefix(project.articleHref, "http") {
+					target="_blank"
+				}
 				rel="noopener"
 				class="text-white bg-[#4876A2] hover:bg-[#4876A2]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 border border-gray-300 hover:border-gray-500 hover:px-6 transition-all duration-200"
 			>
