@@ -113,67 +113,69 @@ templ erauSoftwareEngineeringDescription() {
 }
 
 templ Experience() {
-	<div class="flex flex-col gap-2">
-		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-44">Industry</h2>
-			<div class="flex flex-col gap-8">
-				@experienceCard(
-					"Keyfactor",
-					"Product Management",
-					"Product Owner",
-					"Remote",
-					"Nov 2024-Aug 2025",
-					keyfactorProductOwnerDescription(),
-				)
-				@experienceCard(
-					"Keyfactor",
-					"Integrations",
-					"Software Engineer",
-					"Remote",
-					"May 2023-Nov 2024",
-					keyfactorIntegrationEngineerDescription(),
-				)
-				@experienceCard(
-					"Keyfactor",
-					"Integrations",
-					"Software Engineer Intern",
-					"Remote",
-					"Jun 2020-May 2023",
-					keyfactorIntegrationEngineerInternDescription(),
-				)
-				@experienceCard(
-					"EagleSat",
-					"",
-					"Bus Systems Integration Manager",
-					"Prescott, AZ",
-					"Sep 2022-May 2023",
-					eaglesatBusSystemsIntegrationTeamLead(),
-				)
-				@experienceCard(
-					"EagleSat",
-					"",
-					"Communications & Ground Station Team Lead",
-					"Prescott, AZ",
-					"May 2021-Sep 2022",
-					eaglesatCommunicationsTeamLead(),
-				)
-				@experienceCard(
-					"Home Advisor",
-					"Technical Operations",
-					"Service Desk Intern",
-					"Denver, CO",
-					"Jun 2017-Aug 2019",
-					homeAdvisorITInternDescription(),
-				)
-			</div>
+	<div class="flex flex-col md:flex-row gap-8">
+		<div class="min-w-40 shrink-0">
+			<h2 class="text-3xl font-bold">Industry</h2>
+		</div>
+		<div class="flex flex-col gap-8">
+			@experienceCard(
+				"Keyfactor",
+				"Product Management",
+				"Product Owner",
+				"Remote",
+				"Nov 2024-Aug 2025",
+				keyfactorProductOwnerDescription(),
+			)
+			@experienceCard(
+				"Keyfactor",
+				"Integrations",
+				"Software Engineer",
+				"Remote",
+				"May 2023-Nov 2024",
+				keyfactorIntegrationEngineerDescription(),
+			)
+			@experienceCard(
+				"Keyfactor",
+				"Integrations",
+				"Software Engineer Intern",
+				"Remote",
+				"Jun 2020-May 2023",
+				keyfactorIntegrationEngineerInternDescription(),
+			)
+			@experienceCard(
+				"EagleSat",
+				"",
+				"Bus Systems Integration Manager",
+				"Prescott, AZ",
+				"Sep 2022-May 2023",
+				eaglesatBusSystemsIntegrationTeamLead(),
+			)
+			@experienceCard(
+				"EagleSat",
+				"",
+				"Communications & Ground Station Team Lead",
+				"Prescott, AZ",
+				"May 2021-Sep 2022",
+				eaglesatCommunicationsTeamLead(),
+			)
+			@experienceCard(
+				"Home Advisor",
+				"Technical Operations",
+				"Service Desk Intern",
+				"Denver, CO",
+				"Jun 2017-Aug 2019",
+				homeAdvisorITInternDescription(),
+			)
 		</div>
 	</div>
 }
 
 templ Education() {
-	<div class="flex flex-col gap-2">
-		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-44">Academia</h2>
+	<div class="flex flex-col md:flex-row gap-8">
+		<div class="min-w-40 shrink-0">
+			<h2 class="text-3xl font-bold">Academia</h2>
+		</div>
+		<div class="flex flex-col gap-8 justify-self-start">
 			@experienceCard(
 				"Embry-Riddle Aeronautical University",
 				"",

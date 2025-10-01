@@ -326,9 +326,6 @@
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
-  .w-44 {
-    width: calc(var(--spacing) * 44);
-  }
   .w-full {
     width: 100%;
   }
@@ -338,8 +335,14 @@
   .max-w-3xl {
     max-width: var(--container-3xl);
   }
+  .min-w-40 {
+    min-width: calc(var(--spacing) * 40);
+  }
   .min-w-\[2rem\] {
     min-width: 2rem;
+  }
+  .shrink-0 {
+    flex-shrink: 0;
   }
   .flex-grow {
     flex-grow: 1;
@@ -410,6 +413,9 @@
   }
   .self-end {
     align-self: flex-end;
+  }
+  .justify-self-start {
+    justify-self: flex-start;
   }
   .rounded {
     border-radius: 0.25rem;
