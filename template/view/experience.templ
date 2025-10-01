@@ -1,11 +1,6 @@
 package view
 
-import (
-	"github.com/m8rmclaren/website/template/components"
-	"html"
-	"regexp"
-	"strings"
-)
+import "github.com/m8rmclaren/website/template/components"
 
 templ keyfactorProductOwnerDescription() {
 	<p>
@@ -36,9 +31,8 @@ templ keyfactorIntegrationEngineerDescription() {
            hover:text-blue-800 hover:decoration-blue-600 hover:underline-offset-4
            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 		>Simple Environment Service</a>
-		, a full-stack platform that lets teams spin up demo, development, and QA environments for Keyfactor’s enterprise products with an 
-		@components.InlineBold("intuitive UI.")
-		The UI and backend fully abstract the underlying infrastructure and product dependencies to deliver a reliable and repeatable workflow. The system was adopted by 
+		, a full-stack platform that lets teams spin up batteries-included demo, development, and QA environments for Keyfactor’s enterprise products in under 10 minutes. 
+		The service abstracts the deployment & configuration of applications using Kubernetes under the hood to deliver a reliable and repeatable workflow. The system was adopted by 
 		@components.InlineBold("20%+")
 		of staff, and scaled to 
 		@components.InlineBold("100+ environments")
@@ -80,52 +74,95 @@ templ keyfactorIntegrationEngineerInternDescription() {
 	</p>
 }
 
-templ homeAdvisorITInternDescription() {
+templ eaglesatBusSystemsIntegrationTeamLead() {
 	<p>
-		First-line IT support for a team of over 2,800 at HomeAdvisor.
+		Designed mission profiles for each sub-system on board EagleSat-2 to implement the required satellite functionality. Mission profiles are implemented with finite state machines that maintain nominal satellite operation while EagleSat-2 is not in contact with the ground station on ERAU's campus. 
 	</p>
 	<p>
-		Coordinated incident response to proper teams during outages.
+		Configured and managed the On-Board Computer (OBC) real-time operating system (FreeRTOS with CMSIS RTOS V2 API) and developed low-level drivers for serial communication (CAN, UART, I2C).
+	</p>
+}
+
+templ eaglesatCommunicationsTeamLead() {
+	<p>
+		Led the communications sub-system team for the EagleSat mission, leading the design, development, and integration of a full-stack satellite communication framework to implement command and control (C2) over EagleSat-2.
+	</p>
+	<p>
+		Designed and implemented a headless UHF ground station and a packet-radio communication application (C++) to handle packet routing between the primary C2 platform and the satellite, provide connection statistics, detect satellite range, and calculate Doppler shift.
+	</p>
+}
+
+templ homeAdvisorITInternDescription() {
+	<p>
+		First-line IT support for a team of over 2,800 at HomeAdvisor.  
+	</p>
+	<p>
+		Coordinated incident response to proper teams during outages, administered Active Directory & Exchange environments, provisioned new-hire workstations & software.
 	</p>
 }
 
 templ erauSoftwareEngineeringDescription() {
 	<p>
-		Space Track
+		@components.InlineBold("GPA: ")
+		3.89 (magna cum laude)
+	</p>
+	<p>
+		@components.InlineBold("Activities & Societies: ")
+		EagleSat Engineering Team Lead, UAS Club Secretary, Cyber Defense Club, Computer Science II TA
 	</p>
 }
 
 templ Experience() {
 	<div class="flex flex-col gap-2">
 		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-36">Industry</h2>
+			<h2 class="text-3xl font-bold w-44">Industry</h2>
 			<div class="flex flex-col gap-8">
 				@experienceCard(
 					"Keyfactor",
+					"Product Management",
 					"Product Owner",
 					"Remote",
-					"November 2024-August 2025",
+					"Nov 2024-Aug 2025",
 					keyfactorProductOwnerDescription(),
 				)
 				@experienceCard(
 					"Keyfactor",
-					"Software Engineer - Integrations",
+					"Integrations",
+					"Software Engineer",
 					"Remote",
-					"May 2023-November 2024",
+					"May 2023-Nov 2024",
 					keyfactorIntegrationEngineerDescription(),
 				)
 				@experienceCard(
 					"Keyfactor",
-					"Software Engineer Intern - Integrations",
+					"Integrations",
+					"Software Engineer Intern",
 					"Remote",
-					"June 2020-May 2023",
+					"Jun 2020-May 2023",
 					keyfactorIntegrationEngineerInternDescription(),
 				)
 				@experienceCard(
+					"EagleSat",
+					"",
+					"Bus Systems Integration Manager",
+					"Prescott, AZ",
+					"Sep 2022-May 2023",
+					eaglesatBusSystemsIntegrationTeamLead(),
+				)
+				@experienceCard(
+					"EagleSat",
+					"",
+					"Communications & Ground Station Team Lead",
+					"Prescott, AZ",
+					"May 2021-Sep 2022",
+					eaglesatCommunicationsTeamLead(),
+				)
+				@experienceCard(
 					"Home Advisor",
+					"Technical Operations",
 					"Service Desk Intern",
 					"Denver, CO",
-					"June 2017-August 2019",
+					"Jun 2017-Aug 2019",
 					homeAdvisorITInternDescription(),
 				)
 			</div>
@@ -136,49 +173,27 @@ templ Experience() {
 templ Education() {
 	<div class="flex flex-col gap-2">
 		<div class="flex flex-col md:flex-row gap-8">
-			<h2 class="text-3xl font-bold w-36">Academia</h2>
+			<h2 class="text-3xl font-bold w-44">Academia</h2>
 			@experienceCard(
 				"Embry-Riddle Aeronautical University",
+				"",
 				"BS, Software Engineering",
 				"Prescott, AZ",
-				"August 2019-May 2023",
+				"Aug 2019-May 2023",
 				erauSoftwareEngineeringDescription(),
 			)
 		</div>
 	</div>
 }
 
-var boldRe = regexp.MustCompile(`\*\*(.+?)\*\*`)
-
-func parseBoldTempl(line string) templ.Component {
-	var b strings.Builder
-	last := 0
-
-	for _, m := range boldRe.FindAllStringSubmatchIndex(line, -1) {
-		start, end := m[0], m[1]
-		innerStart, innerEnd := m[2], m[3]
-
-		// Write text before **...**, escaped.
-		b.WriteString(html.EscapeString(line[last:start]))
-
-		// Write the bold span with escaped inner text.
-		b.WriteString(`<span class="font-bold">`)
-		b.WriteString(html.EscapeString(line[innerStart:innerEnd]))
-		b.WriteString(`</span>`)
-
-		last = end
-	}
-
-	// Write the trailing text, escaped.
-	b.WriteString(html.EscapeString(line[last:]))
-
-	// Important: tell Templ this is safe HTML so it won't escape the tags.
-	return templ.Raw(b.String())
-}
-
-templ experienceCard(company, title, location, duration string, description templ.Component) {
+templ experienceCard(company, team, title, location, duration string, description templ.Component) {
 	<div class="flex flex-col gap-1">
-		<h2 class="text-xl font-bold">{ company } &#x2022; { title }</h2>
+		<h3 class="text-xl font-bold">
+			{ company } &#x2022; { title }
+			if team != "" {
+				&mdash; { team }
+			}
+		</h3>
 		<p class="font-medium">
 			{ location } &#x2022; { duration }
 		</p>
