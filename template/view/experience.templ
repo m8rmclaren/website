@@ -4,25 +4,19 @@ import "github.com/m8rmclaren/website/template/components"
 
 templ keyfactorProductOwnerDescription() {
 	<p>
+		Combined understanding of customer pain points with product and technical context to guide features that reduced deployment friction and enabled long-term scalability in our core and ancilliary products.  
+	</p>
+	<p>
 		@components.InlineBold("Conducted internal and customer interviews")
 		to identify and prioritize optimizations that removed major pain points in deploying and scaling integrations with Keyfactor’s core products; follow-up interviews showed 
 		@components.InlineBold("measurable improvements")
 		in customer deployment speed and reliability.
 	</p>
-	<p>
-		Worked with customers to capture needs, translate them into clear product requirements with business context, and guide features through 
-		@components.InlineBold("triage, development, testing, and release,")
-		{ "for" } Keyfactor's flagship and ancilliary products.
-	</p>
-	<p>
-		@components.InlineBold("Led incident response")
-		when product defects caused customer outages: diagnosed issues, brought the right engineers into the investigation, and advocated for swift fixes and prioritized releases to restore service and maintain customer trust.
-	</p>
 }
 
 templ keyfactorIntegrationEngineerDescription() {
 	<p>
-		Proposed, championed, and built the 
+		Identified a major inefficiency in deploying lab workspaces, where deploying Keyfactor’s products typically required 2+ hours of specialized work across many skill domains. Designed and built the 
 		<a
 			href="/blog/simple-environment-service"
 			rel="noopener"
@@ -31,31 +25,22 @@ templ keyfactorIntegrationEngineerDescription() {
            hover:text-blue-800 hover:decoration-blue-600 hover:underline-offset-4
            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 		>Simple Environment Service</a>
-		, a full-stack platform that lets teams spin up batteries-included demo, development, and QA environments for Keyfactor’s enterprise products in under 10 minutes. 
-		The service abstracts the deployment & configuration of applications using Kubernetes under the hood to deliver a reliable and repeatable workflow. The system was adopted by 
-		@components.InlineBold("20%+")
-		of staff, and scaled to 
+		to reduce this to 
+		@components.InlineBold("under 10 minutes,")
+		providing fully configured, batteries-included environments without requiring domain expertise. Championed adoption across the company, with 
+		@components.InlineBold("over 20%")
+		of staff using the service to launch 
 		@components.InlineBold("100+ environments")
-		across 
+		on 
 		@components.InlineBold("40+ nodes,")
 		handling 
 		@components.InlineBold("1.8M+ daily")
-		HTTP requests and ingesting 
-		@components.InlineBold("68M+ log records")
-		per day. 
+		HTTP requests and ingesting 68M+ log records per day.
 	</p>
 	<p>
-		Implemented and shipped core product integrations to Azure & GCP application gateways & certificate authorities.
-	</p>
-	<p>
-		@components.InlineBold("Designed and led adoption")
-		of an automated documentation toolchain using 
-		@components.InlineBold("Python")
-		and 
-		@components.InlineBold("Jinja2")
-		to render standardized Markdown with templating. Advocated the approach to the engineering team and guided the 
-		@components.InlineBold("migration of 100+ repositories")
-		to the new format, improving consistency, reducing manual effort, and accelerating documentation updates.
+		Recognized widespread frustration from customers and engineers caused by inconsistent documentation across 100+ integrations. Developed a standardized documentation format and parser that separated content from presentation, allowing engineers to focus on code while ensuring customers received clear, uniform docs. Championed the approach within the team and 
+		@components.InlineBold("drove adoption across 100+ repositories,")
+		improving readability, reducing maintenance overhead, and accelerating updates.
 	</p>
 }
 
@@ -89,15 +74,6 @@ templ eaglesatCommunicationsTeamLead() {
 	</p>
 	<p>
 		Designed and implemented a headless UHF ground station and a packet-radio communication application (C++) to handle packet routing between the primary C2 platform and the satellite, provide connection statistics, detect satellite range, and calculate Doppler shift.
-	</p>
-}
-
-templ homeAdvisorITInternDescription() {
-	<p>
-		First-line IT support for a team of over 2,800 at HomeAdvisor.  
-	</p>
-	<p>
-		Coordinated incident response to proper teams during outages, administered Active Directory & Exchange environments, provisioned new-hire workstations & software.
 	</p>
 }
 
@@ -136,7 +112,7 @@ templ Experience() {
 			)
 			@experienceCard(
 				"Keyfactor",
-				"Integrations",
+				"Solutions Engineering",
 				"Software Engineer Intern",
 				"",
 				"Jun 2020-May 2023",
@@ -157,14 +133,6 @@ templ Experience() {
 				"Prescott, AZ",
 				"May 2021-Sep 2022",
 				eaglesatCommunicationsTeamLead(),
-			)
-			@experienceCard(
-				"Home Advisor",
-				"Technical Operations",
-				"Service Desk Intern",
-				"Denver, CO",
-				"Jun 2017-Aug 2019",
-				homeAdvisorITInternDescription(),
 			)
 		</div>
 	</div>
