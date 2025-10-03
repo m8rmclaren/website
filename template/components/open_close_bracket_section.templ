@@ -3,11 +3,15 @@ package components
 templ OpenCloseBracketSection(title string, component templ.Component) {
 	<div class="flex flex-col gap-8">
 		<!-- Title & Open bracket -->
-		<h2 class="text-3xl font-bold">{ title }<span class="pl-4 font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span></h2>
-		<div class="flex flex-col pl-6 gap-14">
+		<h2 class="text-3xl font-bold">
+			{ title }<span class="hidden md:inline pl-4 font-normal text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#123;</span>
+		</h2>
+		<div class="pl-0 md:pl-6">
 			@component
 		</div>
 		<!-- Close bracket -->
-		<div class="text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">&#125;</div>
+		<div class="hidden md:block text-3xl text-[#4876A2] font-mono text-accent-1 leading-none select-none">
+			&#125;
+		</div>
 	</div>
 }
