@@ -17,8 +17,11 @@ templ profile() {
 		<div>
 			<h1 class="text-4xl font-bold">Hayden Roszell</h1>
 		</div>
+		<p class="text-base font-medium">
+			Hi, I'm Hayden.
+		</p>
 		<p>
-			Hi, I'm Hayden. Over the past several years I've been designing infrastructure, building systems, writing code across stacks, and turning complex requirements into maintainable solutions.
+			Over the past several years I've been designing infrastructure, building systems, writing code across stacks, and turning complex requirements into maintainable solutions.
 		</p>
 		<p>
 			One of the most gratifying parts of being a software engineer for me is that I can manifest my ideas into reality with just my computer, an editor, and an internet connection.
@@ -35,33 +38,72 @@ templ profile() {
 }
 
 templ links() {
-	<div class="flex flex-row gap-x-2">
-		<a
-			href="https://www.linkedin.com/in/haydenroszell"
-			rel="noopener"
-			target="_blank"
-			class="text-gray-800 bg-gray-200 hover:bg-gray-300/90 focus:ring-gray-200/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 border border-gray-300 hover:border-gray-500 hover:px-6 transition-all duration-200"
-		>
-			@components.LinkedinIcon("w-8")
-			Find me on Linkedin
-		</a>
-		<a
-			href="https://github.com/m8rmclaren"
-			rel="noopener"
-			target="_blank"
-			class="text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
-		>
-			@components.GithubIcon("w-8 fill-white")
-			Find me on Github
-		</a>
-		<a
-			href="/download/HaydenJRoszell.pdf"
-			download="HaydenJRoszell.pdf"
-			hx-boost="false"
-			class="text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
-		>
-			@components.DownloadIcon("w-8 fill-white")
-			CV
-		</a>
+	<div class="flex flex-col justify-around md:flex-row gap-x-2">
+		<div class="flex flex-row justify-stretch md:justify-around gap-x-2">
+			<a
+				href="https://www.linkedin.com/in/haydenroszell"
+				rel="noopener"
+				target="_blank"
+				class="w-full md:w-auto text-gray-800 bg-gray-200 hover:bg-gray-300/90 focus:ring-gray-200/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 border border-gray-300 hover:border-gray-500 hover:px-6 transition-all duration-200"
+			>
+				@components.LinkedinIcon("w-8")
+				Find me on Linkedin
+			</a>
+			<a
+				href="https://github.com/m8rmclaren"
+				rel="noopener"
+				target="_blank"
+				class="w-full md:w-auto text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
+			>
+				@components.GithubIcon("w-8 fill-white")
+				Find me on Github
+			</a>
+		</div>
+		<div class="flex flex-row justify-stretch md:justify-around gap-x-2">
+			<a
+				href="/download/HaydenJRoszell.pdf"
+				download="HaydenJRoszell.pdf"
+				hx-boost="false"
+				class="w-full md:w-auto text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
+			>
+				@components.DownloadIcon("w-8 fill-white")
+				CV
+			</a>
+			<button
+				id="copyEmailBtn"
+				onclick="copyEmail()"
+				class="w-full md:w-auto text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex flex-row gap-2 items-center dark:hover:bg-[#050708]/30 me-2 mb-2 hover:px-6 transition-all duration-200"
+			>
+				<span id="copyIconDefault">
+					@components.CopyIcon("w-8 fill-white")
+				</span>
+				<span id="copyIconCopied" style="display: none;">
+					@components.CopiedIcon("w-8 fill-white")
+				</span>
+				<span id="copyText">Copy Email</span>
+			</button>
+			<script>
+              function copyEmail() {
+                const email = "hroszell@gmail.com";
+                const iconDefault = document.getElementById("copyIconDefault");
+                const iconCopied = document.getElementById("copyIconCopied");
+                const text = document.getElementById("copyText");
+
+                navigator.clipboard.writeText(email).then(() => {
+                  // Swap icon + text
+                  iconDefault.style.display = "none";
+                  iconCopied.style.display = "inline";
+                  text.textContent = "Copied!";
+
+                  // Reset after 3 seconds
+                  setTimeout(() => {
+                    iconDefault.style.display = "inline";
+                    iconCopied.style.display = "none";
+                    text.textContent = "Copy Email";
+                  }, 3000);
+                });
+              }
+            </script>
+		</div>
 	</div>
 }
