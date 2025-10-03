@@ -7,25 +7,25 @@ import (
 
 templ Projects() {
 	<div class="flex flex-col">
-		<h2 class="text-3xl font-bold">Projects I'm Proud of</h2>
+		<h2 class="text-3xl font-bold">Highlights</h2>
 		<div class="flex flex-col gap-8">
 			@projectCard(project{
-				projectName:       "EagleSat-2 (3U CubeSat)",
+				projectName:       "EagleSat-2 (3U CubeSat; actual flight structure)",
 				tagline:           "Testing memory resilience in the harshness of Earth orbit",
 				imageSrc:          "/images/eaglesat/eaglesat-2-orbiting-earth.png",
 				imagePlaceholder:  "EagleSat-2 Orbiting Earth Render",
 				articleHref:       "https://www.linkedin.com/feed/update/urn:li:activity:7379209278949289985/",
 				articleButtonText: "Read the Post",
-				currentStatusText: "Launched on September 14, 2025 aboard the Cygnus XL NG-23 mission, propelled by a SpaceX Falcon 9",
+				currentStatusText: "Status: Launched on Sep 14, 2025 aboard the Cygnus XL NG-23 mission. Currently at the ISS, deployment scheduled soon.",
 			})
 			@projectCard(project{
 				projectName:       "Simple Environment Service",
-				tagline:           "Scalable, on-demand application provisioning using Kubernetes",
+				tagline:           "Hours to minutes: Deploy batteries-included lab environments instantly",
 				imageSrc:          "/images/ses/framed_ses_dashboard_browser_2.png",
 				imagePlaceholder:  "SES Dashboard Markup",
 				articleHref:       "/blog/simple-environment-service",
 				articleButtonText: "Read the Article",
-				currentStatusText: "",
+				currentStatusText: "Status: Actively in use across Keyfactor",
 			})
 		</div>
 	</div>
@@ -40,9 +40,11 @@ templ projectCard(project project) {
 		<h2 class="pt-10 w-4/5 text-2xl font-medium">
 			{ project.tagline }
 		</h2>
-		<h3 class="pt-4 text-base font-medium">
-			{ project.projectName }
-		</h3>
+		if project.currentStatusText != "" {
+			<p class="pt-4 w-3/5 text-base font-medium">
+				{ project.currentStatusText }
+			</p>
+		}
 		<div class="pt-12 w-3/5 flex justify-center">
 			@components.Image(
 				project.imageSrc,
@@ -50,11 +52,9 @@ templ projectCard(project project) {
 				"rounded-2xl",
 			)
 		</div>
-		if project.currentStatusText != "" {
-			<p class="pt-4 w-4/5 text-base font-medium">
-				{ project.currentStatusText }
-			</p>
-		}
+		<h3 class="pt-4 text-base font-medium">
+			{ project.projectName }
+		</h3>
 		<div class="pt-8 pb-4">
 			<a
 				href={ project.articleHref }
