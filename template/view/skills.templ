@@ -3,21 +3,21 @@ package view
 import "github.com/m8rmclaren/website/template/components"
 
 templ Skills() {
-	@components.OpenCloseBracketSection("Skills", skills())
+	@components.OpenCloseBracketSection("How I Build", skills())
 	@components.OpenCloseBracketSection("My Stack", stack())
 }
 
 templ skills() {
 	<div class="flex flex-col md:flex-row justify-stretch gap-8">
-		<div class="flex flex-col gap-4 md:w-96">
+		<div class="flex flex-col gap-4 w-96 ">
 			<p>
-				I’m a full-stack engineer with hands-on experience across the stack. With my skills and tenacity, I can take ideas from concept to reality, end-to-end. I've built backend services, frontend UIs, CI/CD pipelines, and cloud infrastructure.
+				I’m a full-stack engineer and I take ideas from concept to reality. I thrive on understanding how things work at a fundamental level and build with best practices, not quick hacks.
 			</p>
 			<p>
-				I work comfortably across infrastructure and application layers. I've managed Linux systems, implemented OAuth2/OIDC authentication flows, and configured networking with DNS, load balancers, and application gateways. I enjoy understanding how things work at a fundamental level and build with best practices, not quick hacks.
+				I work comfortably across infrastructure and application layers, from managing Linux systems to implementing authentication flows and configuring complex networking.
 			</p>
 			<p>
-				I've worked on teams big and small, on projects as high-stake as a satellite that's currently orbiting Earth, and as small as tools that streamline very specific workflows.
+				I've worked on teams big and small, on projects as high-stakes as a satellite that's currently orbiting Earth, and as small as tools that streamline very specific workflows.
 			</p>
 		</div>
 		@software()
@@ -56,17 +56,6 @@ templ software() {
 				@tool("Elastic Stack", components.ElasticStackIcon("w-6"))
 			</div>
 		</div>
-		<div class="bg-[#4876A2] h-full w-2 rounded-2xl shadow-md transition-opacity duration-300 opacity-100 z-50"></div>
-		<div class="flex flex-col gap-2">
-			<h3 class="h-12 flex items-center font-medium">
-				Cloud providers
-			</h3>
-			<div class="flex flex-col gap-2">
-				@tool("AWS", components.AWSIcon("w-6"))
-				@tool("GCP", components.GCPIcon("w-6"))
-				@tool("Azure", components.AzureIcon("w-6"))
-			</div>
-		</div>
 	</div>
 }
 
@@ -77,10 +66,7 @@ templ stack() {
 				Effective engineering starts with the right tools. I’ve spent years curating a setup that supports fast, focused development by maximizing productivity and minimizing mental overhead.
 			</p>
 			<p>
-				I've narrowed in on the tools that comprise my stack based on the principle that tools & workflows that I touch & work with daily should effectively be an extension of my spine.
-			</p>
-			<p>
-				The core of my environment is macOS, customized with Yabai for tiling window management, tmux for terminal multiplexing, and Neovim for editing.
+				I've narrowed in on the tools that comprise my stack based on the principle that tools & workflows that I touch & work with daily should be an extension of my spine.
 			</p>
 			<p>
 				@components.InlineGithubLink("dotfiles", "https://github.com/m8rmclaren/dotfiles")
