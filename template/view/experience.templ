@@ -122,7 +122,7 @@ templ Experience() {
 				"Keyfactor",
 				"Product Management",
 				"Product Owner",
-				"Remote",
+				"",
 				"Nov 2024-Aug 2025",
 				keyfactorProductOwnerDescription(),
 			)
@@ -130,7 +130,7 @@ templ Experience() {
 				"Keyfactor",
 				"Integrations",
 				"Software Engineer",
-				"Remote",
+				"",
 				"May 2023-Nov 2024",
 				keyfactorIntegrationEngineerDescription(),
 			)
@@ -138,7 +138,7 @@ templ Experience() {
 				"Keyfactor",
 				"Integrations",
 				"Software Engineer Intern",
-				"Remote",
+				"",
 				"Jun 2020-May 2023",
 				keyfactorIntegrationEngineerInternDescription(),
 			)
@@ -197,7 +197,10 @@ templ experienceCard(company, team, title, location, duration string, descriptio
 			}
 		</h3>
 		<p class="font-medium">
-			{ location } &#x2022; { duration }
+			if location != "" {
+				{ location } &#x2022; 
+			}
+			{ duration }
 		</p>
 		<div class="flex flex-col gap-2 pt-2">
 			@description
